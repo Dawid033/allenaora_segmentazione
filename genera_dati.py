@@ -108,10 +108,13 @@ def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, giorn
         print(nome, min(date_seg), max(date_seg), min(anz_seg), max(anz_seg), round(quota_tipici, 2))
 
         giorni_seg = [g for g, s in zip(giorni_ultima_sessione, segmenti) if s == nome]
-        violazioni = sum(g<a for g, a in zip(giorni_seg, anz_seg))
+        violazioni = sum(g > a for g, a in zip(giorni_seg, anz_seg))
         sotto_90 = sum(a<90 for a in anz_seg)
         print("giorni dall ultima sessione:", min(giorni_seg), max(giorni_seg),
                "oltre l'anzianita", violazioni,"anzianita <90", sotto_90)
+        sess_seg = [violazionin for n, s in zip(num_sessioni, segmenti) if s ==nome]
+        n_uno = sum(n ==1 for n in sess_seg)
+        print(" sessioni:", min(segg_seg), max(sess_seg), "con 1 sessione", n_uno)
 
 def main():
 
