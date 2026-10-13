@@ -15,7 +15,8 @@ SEGMENTO_CLIENTI = {
         "quota_tipici": 0.75,
         "mesi_ammessi": [(2026,1),(2026,2)],
         "ritmo_mensile": (7,10),
-        "durata_attiva": None,
+        "durata_attiva": None, #regola non necessaria a questo segmento
+        "sessioni_totali": None, #regola non necessaria a questo segmento
     },
     "Prova_costume": {
         "quota": 0.20,
@@ -23,7 +24,8 @@ SEGMENTO_CLIENTI = {
         "quota_tipici":1,
         "mesi_ammessi":[],
         "ritmo_mensile": (8,12), 
-        "durata_attiva": None,
+        "durata_attiva": None,#regola non necessaria a questo segmento
+        "sessioni_totali": None, #regola non necessaria a questo segmento
     },
     "Occasionali": {
         "quota": 0.30,
@@ -31,7 +33,8 @@ SEGMENTO_CLIENTI = {
         "quota_tipici":1,
         "mesi_ammessi": [],
         "ritmo_mensile": (0.5,1.5),
-        "durata_attiva": None,
+        "durata_attiva": None, #regola non necessaria a questo segmento
+        "sessioni_totali": None, #regola non necessaria a questo segmento
     },
     "Ripartenze_mancate": {
         "quota": 0.25,
@@ -40,6 +43,7 @@ SEGMENTO_CLIENTI = {
         "mesi_ammessi": [(2025,10),(2025,11),(2025,12)],
         "ritmo_mensile": None,
         "durata_attiva": (14,45),
+        "sessioni_totali": (2,8),
     },
 }
 
@@ -68,6 +72,13 @@ def normale_troncata(rng,minimo,massimo):
         valore = rng.normal(media,dev_std)
     return valore
 
+def poisson_troncata(rng,minimo,massimo):
+    lam = (minimo + massimo)/2
+    valore = rng.poisson(lam)
+    while valore < minimo or valore > massimo:
+        valore = rng.poisson(lam)
+    return int(valore)
+
 def estrai_num_sessioni(rng, regole, anzianita):
 
     minimo, massimo = regole["ritmo_mensile"]
@@ -88,8 +99,6 @@ def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, giorn
         if regole["durata_attiva"] is not None:
             giorni_seg = [g for g, s in zip(giorni_ultima_sessione, segmenti) if s == nome]
             print("  giorni dall'ultima sessione:", min(giorni_seg), max(giorni_seg))
-        if regole["ritmo_mensile"] is None:
-            continue
         sess_seg = [n for n, s in zip(num_sessioni, segmenti) if s == nome]
         n_uno = sum(n == 1 for n in sess_seg)
         print("  sessioni:", min(sess_seg), max(sess_seg), "con 1 sessione", n_uno)
@@ -117,13 +126,14 @@ def main():
         date_iscrizione.append(data)
         anzianita.append(anz)
 
-        if segmento != "Ripartenze_mancate":
+        if regole["ritmo_mensile"] is not None:
             num_sessioni.append(estrai_num_sessioni(rng, regole, anz))
             giorni_ultima_sessione.append(None)
         else:
             minimo, massimo = regole["durata_attiva"]
             durata = round(normale_troncata(rng,minimo,massimo))
-            num_sessioni.append(None) 
+            min_sess, max_sess = regole["sessioni_totali"]
+            num_sessioni.append(poisson_troncata(rng,min_sess,max_sess))
             giorni_ultima_sessione.append(anz - durata)
 
     for j in range(5):
