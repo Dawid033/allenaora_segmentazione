@@ -112,9 +112,9 @@ def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, giorn
         sotto_90 = sum(a<90 for a in anz_seg)
         print("giorni dall ultima sessione:", min(giorni_seg), max(giorni_seg),
                "oltre l'anzianita", violazioni,"anzianita <90", sotto_90)
-        sess_seg = [violazionin for n, s in zip(num_sessioni, segmenti) if s ==nome]
+        sess_seg = [violazioni for n, s in zip(num_sessioni, segmenti) if s ==nome]
         n_uno = sum(n ==1 for n in sess_seg)
-        print(" sessioni:", min(segg_seg), max(sess_seg), "con 1 sessione", n_uno)
+        print(" sessioni:", min(sess_seg), max(sess_seg), "con 1 sessione", n_uno)
 
 def main():
 
