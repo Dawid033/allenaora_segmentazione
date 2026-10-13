@@ -17,6 +17,7 @@ SEGMENTO_CLIENTI = {
         "ritmo_mensile": (7,10),
         "durata_attiva": None, #regola non necessaria a questo segmento
         "sessioni_totali": None, #regola non necessaria a questo segmento
+        "giorni_ultima_sessione": (1,15),
     },
     "Prova_costume": {
         "quota": 0.20,
@@ -26,6 +27,7 @@ SEGMENTO_CLIENTI = {
         "ritmo_mensile": (8,12), 
         "durata_attiva": None,#regola non necessaria a questo segmento
         "sessioni_totali": None, #regola non necessaria a questo segmento
+        "giorni_ultima_sessione": (1,25),
     },
     "Occasionali": {
         "quota": 0.30,
@@ -35,6 +37,7 @@ SEGMENTO_CLIENTI = {
         "ritmo_mensile": (0.5,1.5),
         "durata_attiva": None, #regola non necessaria a questo segmento
         "sessioni_totali": None, #regola non necessaria a questo segmento
+        "giorni_ultima_sessione": (20,90),
     },
     "Ripartenze_mancate": {
         "quota": 0.25,
@@ -44,6 +47,7 @@ SEGMENTO_CLIENTI = {
         "ritmo_mensile": None,
         "durata_attiva": (14,45),
         "sessioni_totali": (2,8),
+        "giorni_ultima_sessione": None,
     },
 }
 
@@ -64,11 +68,18 @@ def estrai_data_iscrizione(rng, regole):
     giorno = rng.integers(1, giorni_nel_mese + 1)
     return date(anno,mese,int(giorno))
 
-def normale_troncata(rng,minimo,massimo):
+def normale_troncata(rng,minimo,massimo, limite_superiore=None):
+    #riestrae un valore da una normale troncata
     media = (minimo+massimo)/2
     dev_std = (massimo-minimo) /4
+    
+    if limite_superiore is None:
+        limite_superiore = massimo
+    if limite_superiore < minimo:
+        raise ValueError("limite_superiore minore del minimo") #nessun valore ammesso
+
     valore = rng.normal(media, dev_std)
-    while valore < minimo or valore > massimo:
+    while valore < minimo or valore > limite_superiore:
         valore = rng.normal(media,dev_std)
     return valore
 
@@ -96,12 +107,11 @@ def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, giorn
         quota_tipici = n_tipici / len(date_seg)
         print(nome, min(date_seg), max(date_seg), min(anz_seg), max(anz_seg), round(quota_tipici, 2))
 
-        if regole["durata_attiva"] is not None:
-            giorni_seg = [g for g, s in zip(giorni_ultima_sessione, segmenti) if s == nome]
-            print("  giorni dall'ultima sessione:", min(giorni_seg), max(giorni_seg))
-        sess_seg = [n for n, s in zip(num_sessioni, segmenti) if s == nome]
-        n_uno = sum(n == 1 for n in sess_seg)
-        print("  sessioni:", min(sess_seg), max(sess_seg), "con 1 sessione", n_uno)
+        giorni_seg = [g for g, s in zip(giorni_ultima_sessione, segmenti) if s == nome]
+        violazioni = sum(g<a for g, a in zip(giorni_seg, anz_seg))
+        sotto_90 = sum(a<90 for a in anz_seg)
+        print("giorni dall ultima sessione:", min(giorni_seg), max(giorni_seg),
+               "oltre l'anzianita", violazioni,"anzianita <90", sotto_90)
 
 def main():
 
@@ -128,7 +138,10 @@ def main():
 
         if regole["ritmo_mensile"] is not None:
             num_sessioni.append(estrai_num_sessioni(rng, regole, anz))
-            giorni_ultima_sessione.append(None)
+            min_giorni, max_giorni = regole["giorni_ultima_sessione"]
+            limite= min(max_giorni,anz)
+            giorni= round(normale_troncata(rng, min_giorni, max_giorni, limite))
+            giorni_ultima_sessione.append(giorni)
         else:
             minimo, massimo = regole["durata_attiva"]
             durata = round(normale_troncata(rng,minimo,massimo))
