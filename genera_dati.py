@@ -6,6 +6,15 @@ GIORNI_PER_MESE = 365/12
 
 SEED = 42
 N_CLIENTI = 500
+MOLTIPLICATORE_CATEGORIA = { #ritocco di prezzo dovuto alla categoria 
+    #tramite moltiplicatore percentuale
+    "Forza e tonificazione" : 1.0,
+    "Cardio/HIIT": 1.0,
+    "Yoga e Pilates": 0.9,
+    "Postura e riabilitazione": 1.1,
+}
+CATEGORIE = list(MOLTIPLICATORE_CATEGORIA.keys())
+
 DATA_RIFERIMENTO = date(2026,6,30)
 #creo il dizionario dei segmenti/tipi_di_clienti ipotizzati
 SEGMENTO_CLIENTI = {
@@ -18,6 +27,8 @@ SEGMENTO_CLIENTI = {
         "durata_attiva": None, #regola non necessaria a questo segmento
         "sessioni_totali": None, #regola non necessaria a questo segmento
         "giorni_ultima_sessione": (1,15),
+        "prezzo_base": (30,38), #range prezzi categoria
+        "prob_categorie": [0.30,0.20,0.20,0.30], #Forza e tonificazione, Cardio/HIIT, Yoga e pilates, Postura e riabilitazione
     },
     "Prova_costume": {
         "quota": 0.20,
@@ -28,6 +39,8 @@ SEGMENTO_CLIENTI = {
         "durata_attiva": None,#regola non necessaria a questo segmento
         "sessioni_totali": None, #regola non necessaria a questo segmento
         "giorni_ultima_sessione": (1,25),
+        "prezzo_base": (42,55), #range prezzi categoria
+        "prob_categorie": [0.35,0.35,0.20,0.10], #Forza e tonificazione, Cardio/HIIT, Yoga e pilates, Postura e riabilitazione
     },
     "Occasionali": {
         "quota": 0.30,
@@ -38,6 +51,8 @@ SEGMENTO_CLIENTI = {
         "durata_attiva": None, #regola non necessaria a questo segmento
         "sessioni_totali": None, #regola non necessaria a questo segmento
         "giorni_ultima_sessione": (20,90),
+        "prezzo_base": (22,30), #range prezzi categoria
+        "prob_categorie": [0.20,0.25,0.40,0.15], #Forza e tonificazione, Cardio/HIIT, Yoga e pilates, Postura e riabilitazione
     },
     "Ripartenze_mancate": {
         "quota": 0.25,
@@ -48,6 +63,8 @@ SEGMENTO_CLIENTI = {
         "durata_attiva": (14,45),
         "sessioni_totali": (2,8),
         "giorni_ultima_sessione": None,
+        "prezzo_base": (35,45), #range prezzi categoria
+        "prob_categorie": [0.35,0.35,0.25,0.05], #Forza e tonificazione, Cardio/HIIT, Yoga e pilates, Postura e riabilitazione
     },
 }
 
@@ -56,6 +73,12 @@ for nome, regole in SEGMENTO_CLIENTI.items():
         if not ((2025, 7) <= (anno, mese) <= (2026,6)):
             print("Mese fuori dalla finestra di osservazione", nome,anno,mese)
 print("Controllo mesi completo")
+
+for nome, regole in SEGMENTO_CLIENTI.items():
+    p = regole["prob_categorie"]
+    if len(p) !=len(CATEGORIE) or abs(sum(p)-1)> 1e-9:
+        print("Probabilità delle categorie non valide", nome,p)
+print("Controllo categorie completo") 
 
 def estrai_data_iscrizione(rng, regole):
     if rng.random() < regole["quota_tipici"]:
