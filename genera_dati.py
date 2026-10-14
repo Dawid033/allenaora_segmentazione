@@ -27,7 +27,7 @@ SEGMENTO_CLIENTI = {
         "durata_attiva": None, #regola non necessaria a questo segmento
         "sessioni_totali": None, #regola non necessaria a questo segmento
         "giorni_ultima_sessione": (1,15),
-        "prezzo_base": (30,38), #range prezzi categoria
+        "prezzo_base": (30,38), #prezzo base per sessione del segmento
         "prob_categorie": [0.30,0.20,0.20,0.30], #Forza e tonificazione, Cardio/HIIT, Yoga e pilates, Postura e riabilitazione
     },
     "Prova_costume": {
@@ -39,7 +39,7 @@ SEGMENTO_CLIENTI = {
         "durata_attiva": None,#regola non necessaria a questo segmento
         "sessioni_totali": None, #regola non necessaria a questo segmento
         "giorni_ultima_sessione": (1,25),
-        "prezzo_base": (42,55), #range prezzi categoria
+        "prezzo_base": (42,55), #prezzo base per sessione del segmento
         "prob_categorie": [0.35,0.35,0.20,0.10], #Forza e tonificazione, Cardio/HIIT, Yoga e pilates, Postura e riabilitazione
     },
     "Occasionali": {
@@ -51,7 +51,7 @@ SEGMENTO_CLIENTI = {
         "durata_attiva": None, #regola non necessaria a questo segmento
         "sessioni_totali": None, #regola non necessaria a questo segmento
         "giorni_ultima_sessione": (20,90),
-        "prezzo_base": (22,30), #range prezzi categoria
+        "prezzo_base": (22,30), #prezzo base per sessione del segmento
         "prob_categorie": [0.20,0.25,0.40,0.15], #Forza e tonificazione, Cardio/HIIT, Yoga e pilates, Postura e riabilitazione
     },
     "Ripartenze_mancate": {
@@ -63,7 +63,7 @@ SEGMENTO_CLIENTI = {
         "durata_attiva": (14,45),
         "sessioni_totali": (2,8),
         "giorni_ultima_sessione": None,
-        "prezzo_base": (35,45), #range prezzi categoria
+        "prezzo_base": (35,45), #prezzo base per sessione del segmento
         "prob_categorie": [0.35,0.35,0.25,0.05], #Forza e tonificazione, Cardio/HIIT, Yoga e pilates, Postura e riabilitazione
     },
 }
@@ -120,7 +120,11 @@ def estrai_num_sessioni(rng, regole, anzianita):
     mesi= anzianita / GIORNI_PER_MESE
     lam= ritmo * mesi
     n=rng.poisson(lam)
-    return max(1,int(n))        
+    return max(1,int(n)) 
+
+def estrai_categoria(rng,regole):
+    """Estrae la categoria preferita con le probabilità del segmento"""
+    return str(rng.choice(CATEGORIE, p=regole["prob_categorie"])) 
 
 def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, giorni_ultima_sessione):
     for nome, regole in SEGMENTO_CLIENTI.items():
@@ -153,6 +157,7 @@ def main():
     anzianita= []
     num_sessioni= []
     giorni_ultima_sessione= []
+    categorie = []
 
     for i, segmento in enumerate(segmenti, start=1):
         regole = SEGMENTO_CLIENTI[segmento]
@@ -174,6 +179,9 @@ def main():
             min_sess, max_sess = regole["sessioni_totali"]
             num_sessioni.append(poisson_troncata(rng,min_sess,max_sess))
             giorni_ultima_sessione.append(anz - durata)
+
+        categoria =estrai_categoria(rng,regole)
+        categorie.append(categoria)
 
     for j in range(5):
         print(id_clienti[j], segmenti[j], date_iscrizione[j], anzianita[j], num_sessioni[j])
