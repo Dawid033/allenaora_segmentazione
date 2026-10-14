@@ -126,7 +126,15 @@ def estrai_categoria(rng,regole):
     """Estrae la categoria preferita con le probabilità del segmento"""
     return str(rng.choice(CATEGORIE, p=regole["prob_categorie"])) 
 
-def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, giorni_ultima_sessione):
+def estrai_prezzo_sessione(rng, regole, categoria):
+    """Prezzo per sessione: base del segmento (normale troncata, D18)
+    con il ritocco della categoria (D04)."""
+    minimo, massimo = regole["prezzo_base"]
+    prezzo_base = normale_troncata(rng, minimo, massimo)
+    return round(float(prezzo_base) * MOLTIPLICATORE_CATEGORIA[categoria], 2)
+
+def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, 
+                       giorni_ultima_sessione, categorie, importo_totale):
     for nome, regole in SEGMENTO_CLIENTI.items():
         date_seg = [d for d, s in zip(date_iscrizione, segmenti) if s == nome]
         anz_seg = [a for a, s in zip(anzianita, segmenti) if s == nome]
@@ -143,6 +151,14 @@ def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, giorn
         n_uno = sum(n ==1 for n in sess_seg)
         print(" sessioni:", min(sess_seg), max(sess_seg), "con 1 sessione", n_uno)
 
+        cat_seg = [c for c, s in zip(categorie, segmenti) if s == nome]
+        print(" categorie:", [cat_seg.count(c) for c in CATEGORIE])
+        medi_seg = [imp / n for imp, n, s in zip(importo_totale, num_sessioni, segmenti)
+                    if s == nome]
+        print(" importo medio:", round(min(medi_seg), 2), round(max(medi_seg), 2),
+              round(sum(medi_seg) / len(medi_seg),2))
+
+
 def main():
 
     rng = np.random.default_rng(SEED)
@@ -158,6 +174,7 @@ def main():
     num_sessioni= []
     giorni_ultima_sessione= []
     categorie = []
+    importo_totale= []
 
     for i, segmento in enumerate(segmenti, start=1):
         regole = SEGMENTO_CLIENTI[segmento]
@@ -183,6 +200,9 @@ def main():
         categoria =estrai_categoria(rng,regole)
         categorie.append(categoria)
 
+        prezzo = estrai_prezzo_sessione(rng, regole, categoria)
+        importo_totale.append(round(num_sessioni[-1] * prezzo, 2))
+
     for j in range(5):
         print(id_clienti[j], segmenti[j], date_iscrizione[j], anzianita[j], num_sessioni[j])
 
@@ -191,7 +211,8 @@ def main():
         print(nome, conteggio)
     print("Totale:", conteggi.sum())
 
-    controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, giorni_ultima_sessione)
+    controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, giorni_ultima_sessione,
+                       categorie,importo_totale)
 
 if __name__ == "__main__":
     main()
