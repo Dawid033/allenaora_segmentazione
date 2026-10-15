@@ -1,6 +1,8 @@
 import calendar
 from datetime import date
 import numpy as np
+from pathlib import Path
+import pandas as pd
 
 GIORNI_PER_MESE = 365/12
 
@@ -14,7 +16,9 @@ MOLTIPLICATORE_CATEGORIA = { #ritocco di prezzo dovuto alla categoria
     "Postura e riabilitazione": 1.1,
 }
 CATEGORIE = list(MOLTIPLICATORE_CATEGORIA.keys())
-
+ZONE = ["Nord-Ovest", "Nord-Est", "Centro", "Sud", "Isole"] #Stessa probabilità x zona
+QUOTA_MANCANTI= 0.025
+CARTELLA_DATI = Path(__file__).parent / "data"
 DATA_RIFERIMENTO = date(2026,6,30)
 #creo il dizionario dei segmenti/tipi_di_clienti ipotizzati
 SEGMENTO_CLIENTI = {
@@ -133,6 +137,13 @@ def estrai_prezzo_sessione(rng, regole, categoria):
     prezzo_base = normale_troncata(rng, minimo, massimo)
     return round(float(prezzo_base) * MOLTIPLICATORE_CATEGORIA[categoria], 2)
 
+def inserisci_mancanti(rng,valori,quota):
+    """Resituisce una copia di valori in cui ogni elemento diventa None con probabilità
+    pari a quota e il numero di valori resi manncanti"""
+    mancante= rng.random(len(valori)) < quota
+    nuovi = [None if m else v for v, m in zip(valori,mancante)]
+    return nuovi, int(mancante.sum())
+
 def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, 
                        giorni_ultima_sessione, categorie, importo_totale):
     for nome, regole in SEGMENTO_CLIENTI.items():
@@ -203,6 +214,8 @@ def main():
         prezzo = estrai_prezzo_sessione(rng, regole, categoria)
         importo_totale.append(round(num_sessioni[-1] * prezzo, 2))
 
+    zone = [str(z) for z in rng.choice(ZONE, size=N_CLIENTI)]
+
     for j in range(5):
         print(id_clienti[j], segmenti[j], date_iscrizione[j], anzianita[j], num_sessioni[j])
 
@@ -213,6 +226,37 @@ def main():
 
     controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, giorni_ultima_sessione,
                        categorie,importo_totale)
+
+    valori_zone, conteggi_zone = np.unique(zone, return_counts=True)
+    for z,c in zip(valori_zone, conteggi_zone):
+        print("zona", z,c)
+
+   #valori mancanti dopo i controlli che non gestiscono None
+    importo_csv, n_imp = inserisci_mancanti(rng,importo_totale, QUOTA_MANCANTI)
+    giorni_csv, n_giorni = inserisci_mancanti(rng,giorni_ultima_sessione,QUOTA_MANCANTI)
+    categorie_csv, n_cat = inserisci_mancanti(rng,categorie, QUOTA_MANCANTI)
+    print("mancanti: importo", n_imp, "giorni", n_giorni, "categoria", n_cat)
+
+    #tutto quello che riguarda l'esportazione
+    CARTELLA_DATI.mkdir(exist_ok=True)
+    clienti=pd.DataFrame({
+        "id_cliente": id_clienti,
+        "zona":zone,
+        "data_iscrizione": date_iscrizione,
+        "num_sessioni":num_sessioni,
+        "importo_totale":importo_csv,
+        "giorni_ultima_sessione":giorni_csv,
+        "categoria_preferita":categorie_csv,
+    })
+    clienti["giorni_ultima_sessione"] = clienti["giorni_ultima_sessione"].astype("Int64")
+    clienti.to_csv(CARTELLA_DATI / "clienti.csv", index=False)
+
+    segmenti_veri = pd.DataFrame({
+        "id_cliente": id_clienti,
+        "segmento": [str(s) for s in segmenti],
+    })     
+    segmenti_veri.to_csv(CARTELLA_DATI/"segmenti_veri.csv", index=False)
+    print("Salvati", len(clienti), "clienti in", CARTELLA_DATI)
 
 if __name__ == "__main__":
     main()
