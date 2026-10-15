@@ -1,0 +1,501 @@
+id_cliente,zona,data_iscrizione,num_sessioni,importo_totale,giorni_ultima_sessione,categoria_preferita
+C0001,Isole,2025-09-27,6,256.26,242,Forza e tonificazione
+C0002,Nord-Ovest,2026-03-09,28,1176.84,2,
+C0003,Nord-Est,2025-11-12,6,216.6,194,Cardio/HIIT
+C0004,Isole,2026-04-20,1,24.62,61,Forza e tonificazione
+C0005,Isole,2026-02-28,27,,6,Forza e tonificazione
+C0006,Isole,2026-01-15,3,115.95,139,Forza e tonificazione
+C0007,Nord-Ovest,2025-09-15,6,250.62,265,Cardio/HIIT
+C0008,Centro,2025-09-26,5,191.85,243,Forza e tonificazione
+C0009,Nord-Ovest,2025-09-10,90,2956.5,3,Yoga e Pilates
+C0010,Isole,2026-01-29,11,276.65,26,Forza e tonificazione
+C0011,Centro,2026-05-31,10,438.7,7,Cardio/HIIT
+C0012,Nord-Est,2025-10-27,3,108.21,226,Yoga e Pilates
+C0013,Nord-Ovest,2025-09-21,7,,21,Cardio/HIIT
+C0014,Sud,2025-12-06,6,214.02,172,Cardio/HIIT
+C0015,Isole,2026-04-28,15,743.1,6,Forza e tonificazione
+C0016,Isole,2025-12-20,49,1469.02,8,Yoga e Pilates
+C0017,Isole,2025-10-08,8,184.8,62,Yoga e Pilates
+C0018,Isole,2025-12-15,69,2508.15,6,Postura e riabilitazione
+C0019,Sud,2026-01-04,5,187.95,151,Forza e tonificazione
+C0020,Isole,2025-09-16,3,81.36,38,Cardio/HIIT
+C0021,Isole,2026-01-13,2,73.92,139,Cardio/HIIT
+C0022,Centro,2026-04-13,35,1527.4,20,Forza e tonificazione
+C0023,Sud,2026-01-08,4,158.12,141,Forza e tonificazione
+C0024,Isole,2025-10-01,5,200.2,236,Yoga e Pilates
+C0025,Nord-Ovest,2025-09-24,7,259.0,256,Yoga e Pilates
+C0026,Sud,2025-10-13,54,1776.06,2,Forza e tonificazione
+C0027,Nord-Est,2026-03-22,4,104.48,36,Forza e tonificazione
+C0028,Nord-Ovest,2026-01-01,51,1658.01,4,Forza e tonificazione
+C0029,Nord-Ovest,2025-07-10,116,4181.8,11,Forza e tonificazione
+C0030,Nord-Ovest,2026-01-19,8,179.92,45,Yoga e Pilates
+C0031,Isole,2026-02-25,3,87.9,80,Postura e riabilitazione
+C0032,Sud,2026-01-15,7,240.17,151,Yoga e Pilates
+C0033,Nord-Ovest,2026-04-03,29,1571.8,24,
+C0034,Sud,2026-04-12,26,1230.32,9,Cardio/HIIT
+C0035,Sud,2025-07-07,9,179.19,61,Yoga e Pilates
+C0036,Centro,2026-02-07,30,886.5,3,Yoga e Pilates
+C0037,Sud,2025-07-02,101,3412.79,8,Forza e tonificazione
+C0038,Isole,2026-02-26,5,112.0,25,Yoga e Pilates
+C0039,Centro,2025-07-08,99,3062.07,5,Forza e tonificazione
+C0040,Sud,2025-08-24,7,187.53,36,Forza e tonificazione
+C0041,Centro,2026-03-08,37,1756.39,21,Forza e tonificazione
+C0042,Nord-Est,2025-10-28,5,205.6,220,Forza e tonificazione
+C0043,Isole,2026-03-30,1,27.73,53,Forza e tonificazione
+C0044,Centro,2026-03-10,38,,11,Forza e tonificazione
+C0045,Sud,2026-01-15,3,108.0,133,Yoga e Pilates
+C0046,Sud,2025-12-07,2,86.6,174,Postura e riabilitazione
+C0047,Sud,2026-04-14,16,796.48,14,Postura e riabilitazione
+C0048,Sud,2026-05-15,17,837.25,16,Forza e tonificazione
+C0049,Sud,2026-04-26,2,49.94,50,Yoga e Pilates
+C0050,Centro,2026-02-11,40,1233.6,11,Yoga e Pilates
+C0051,Sud,2025-08-21,80,2827.2,8,Forza e tonificazione
+C0052,Centro,2025-11-20,48,1684.8,6,Postura e riabilitazione
+C0053,Nord-Est,2026-01-05,4,156.36,149,Cardio/HIIT
+C0054,Sud,2026-02-08,4,123.08,46,Postura e riabilitazione
+C0055,Isole,2025-08-30,11,242.33,67,Yoga e Pilates
+C0056,Sud,2026-01-29,6,223.92,118,Forza e tonificazione
+C0057,Sud,2025-08-27,5,111.7,78,Yoga e Pilates
+C0058,Isole,2026-01-03,4,101.8,,Forza e tonificazione
+C0059,Nord-Est,2025-08-16,79,2864.54,11,Cardio/HIIT
+C0060,Nord-Ovest,2025-08-02,94,3785.38,3,Postura e riabilitazione
+C0061,Nord-Est,2025-09-23,12,373.08,57,Postura e riabilitazione
+C0062,Sud,2025-10-17,1,23.07,42,Yoga e Pilates
+C0063,Isole,2026-02-24,3,77.01,43,Forza e tonificazione
+C0064,Centro,2025-09-08,5,187.75,265,Yoga e Pilates
+C0065,Sud,2025-10-06,10,229.4,34,Yoga e Pilates
+C0066,Nord-Ovest,2025-07-18,13,335.79,53,Cardio/HIIT
+C0067,Sud,2025-10-18,6,176.4,31,Postura e riabilitazione
+C0068,Sud,2026-05-28,4,181.96,25,Forza e tonificazione
+C0069,Centro,2025-12-04,50,1796.0,8,Postura e riabilitazione
+C0070,Sud,2026-03-02,33,1371.48,10,Yoga e Pilates
+C0071,Centro,2025-11-04,60,2414.4,13,
+C0072,Centro,2026-03-31,23,1157.82,,Cardio/HIIT
+C0073,Sud,2025-09-30,5,207.75,253,Forza e tonificazione
+C0074,Sud,2025-11-26,59,1761.74,12,Yoga e Pilates
+C0075,Nord-Est,2026-02-11,36,1054.44,5,Yoga e Pilates
+C0076,Nord-Est,2026-05-11,9,459.81,19,Cardio/HIIT
+C0077,Centro,2026-05-24,12,624.12,22,Postura e riabilitazione
+C0078,Nord-Est,2026-04-18,1,28.39,61,Forza e tonificazione
+C0079,Nord-Est,2025-09-15,6,143.16,47,Yoga e Pilates
+C0080,Nord-Est,2025-10-30,4,150.8,219,Yoga e Pilates
+C0081,Nord-Est,2026-01-31,6,168.9,,Postura e riabilitazione
+C0082,Centro,2026-04-14,21,1034.04,13,Cardio/HIIT
+C0083,Centro,2025-09-16,3,109.83,270,Yoga e Pilates
+C0084,Sud,2026-01-31,38,1324.68,7,Cardio/HIIT
+C0085,Nord-Est,2025-08-17,130,4391.4,5,Cardio/HIIT
+C0086,Isole,2025-08-30,81,2693.25,15,Forza e tonificazione
+C0087,Centro,2026-03-18,1,25.24,25,Cardio/HIIT
+C0088,Sud,2025-08-30,14,366.66,52,Cardio/HIIT
+C0089,Nord-Ovest,2025-11-03,72,2514.24,13,Forza e tonificazione
+C0090,Nord-Ovest,2025-09-30,5,136.95,46,Forza e tonificazione
+C0091,Centro,2026-01-17,41,,3,Postura e riabilitazione
+C0092,Nord-Est,2025-11-07,9,229.14,66,Forza e tonificazione
+C0093,Centro,2026-05-04,19,928.91,10,
+C0094,Nord-Ovest,2026-05-14,14,748.02,,Forza e tonificazione
+C0095,Centro,2026-03-15,35,1684.55,11,Cardio/HIIT
+C0096,Sud,2026-02-18,7,157.22,,Cardio/HIIT
+C0097,Sud,2026-04-06,25,1351.0,4,Forza e tonificazione
+C0098,Nord-Est,2025-08-17,109,3406.25,5,Cardio/HIIT
+C0099,Nord-Est,2025-09-09,65,,4,Forza e tonificazione
+C0100,Centro,2025-11-23,4,165.0,184,Cardio/HIIT
+C0101,Centro,2025-09-23,3,107.37,235,Cardio/HIIT
+C0102,Sud,2025-07-29,12,275.76,33,Yoga e Pilates
+C0103,Nord-Est,2026-04-24,14,693.14,17,Cardio/HIIT
+C0104,Sud,2025-09-26,3,115.65,255,Forza e tonificazione
+C0105,Isole,2026-01-26,4,151.84,130,Forza e tonificazione
+C0106,Nord-Est,2025-11-08,8,224.48,33,Forza e tonificazione
+C0107,Isole,2026-05-02,17,734.91,9,Cardio/HIIT
+C0108,Nord-Est,2026-03-06,32,1476.16,5,Cardio/HIIT
+C0109,Nord-Est,2026-01-13,57,2273.73,4,Postura e riabilitazione
+C0110,Sud,2026-01-07,6,241.2,147,Forza e tonificazione
+C0111,Sud,2025-12-13,3,76.56,56,Yoga e Pilates
+C0112,Centro,2026-02-24,34,1099.56,,Cardio/HIIT
+C0113,Nord-Est,2026-04-04,43,1851.15,19,Yoga e Pilates
+C0114,Nord-Ovest,2025-07-26,11,255.09,29,Yoga e Pilates
+C0115,Isole,2025-12-13,74,2232.58,10,Yoga e Pilates
+C0116,Isole,2026-01-25,7,280.0,140,Cardio/HIIT
+C0117,Isole,2025-09-24,8,299.52,250,Forza e tonificazione
+C0118,Centro,2026-01-16,2,54.84,53,Postura e riabilitazione
+C0119,Isole,2026-04-08,26,1114.1,10,Forza e tonificazione
+C0120,Centro,2025-10-30,15,421.35,66,Cardio/HIIT
+C0121,Nord-Ovest,2025-10-03,7,164.71,39,Yoga e Pilates
+C0122,Nord-Ovest,2025-11-27,8,168.32,81,Yoga e Pilates
+C0123,Nord-Est,2025-10-27,65,1916.85,11,Yoga e Pilates
+C0124,Nord-Est,2026-05-18,13,580.84,7,Forza e tonificazione
+C0125,Isole,2025-10-22,58,1865.28,4,Forza e tonificazione
+C0126,Nord-Est,2026-02-07,10,216.3,57,Yoga e Pilates
+C0127,Sud,2026-04-15,29,1405.63,19,Forza e tonificazione
+C0128,Nord-Est,2025-09-24,74,2323.6,6,Yoga e Pilates
+C0129,Sud,2025-08-13,98,3239.88,11,Postura e riabilitazione
+C0130,Centro,2025-10-08,16,,35,Yoga e Pilates
+C0131,Nord-Ovest,2025-10-20,75,2682.0,6,Forza e tonificazione
+C0132,Centro,2025-12-14,2,81.16,168,Forza e tonificazione
+C0133,Nord-Ovest,2026-01-03,1,23.21,73,Forza e tonificazione
+C0134,Isole,2026-05-14,18,840.06,14,Forza e tonificazione
+C0135,Sud,2025-08-19,15,341.25,87,Cardio/HIIT
+C0136,Isole,2025-07-11,111,4283.49,9,Postura e riabilitazione
+C0137,Isole,2025-09-15,2,82.26,267,Cardio/HIIT
+C0138,Nord-Est,2025-08-26,23,679.88,58,Postura e riabilitazione
+C0139,Sud,2025-10-18,7,221.76,221,Yoga e Pilates
+C0140,Nord-Ovest,2025-11-16,56,1807.12,2,Cardio/HIIT
+C0141,Isole,2025-07-07,14,295.54,43,
+C0142,Sud,2025-07-22,12,291.12,42,Cardio/HIIT
+C0143,Sud,2025-09-23,7,241.92,249,Yoga e Pilates
+C0144,Isole,2025-09-05,4,110.36,53,Cardio/HIIT
+C0145,Isole,2025-09-09,4,94.84,83,Yoga e Pilates
+C0146,Isole,2026-03-12,38,1743.44,14,Forza e tonificazione
+C0147,Nord-Ovest,2026-03-25,43,2011.11,15,
+C0148,Nord-Ovest,2026-02-02,4,98.12,36,Yoga e Pilates
+C0149,Isole,2026-03-31,22,1065.02,23,Forza e tonificazione
+C0150,Nord-Est,2025-10-14,83,2340.6,8,Yoga e Pilates
+C0151,Centro,2026-01-09,4,167.36,141,Cardio/HIIT
+C0152,Nord-Ovest,2026-01-06,5,187.45,153,Yoga e Pilates
+C0153,Sud,2025-07-28,76,2760.32,9,Postura e riabilitazione
+C0154,Isole,2025-08-23,8,223.44,50,Forza e tonificazione
+C0155,Isole,2025-07-29,62,2114.82,1,Forza e tonificazione
+C0156,Centro,2026-04-12,2,52.64,62,Cardio/HIIT
+C0157,Sud,2026-04-28,21,955.29,16,Yoga e Pilates
+C0158,Centro,2025-08-14,17,494.53,41,Forza e tonificazione
+C0159,Centro,2025-07-03,17,449.14,37,Forza e tonificazione
+C0160,Centro,2025-09-02,6,240.66,264,Forza e tonificazione
+C0161,Isole,2025-09-08,72,2602.08,6,Cardio/HIIT
+C0162,Nord-Est,2025-09-30,6,235.02,246,Forza e tonificazione
+C0163,Centro,2025-09-17,67,2294.75,11,Forza e tonificazione
+C0164,Sud,2025-07-21,101,3270.38,10,Cardio/HIIT
+C0165,Centro,2025-11-14,6,163.44,25,Postura e riabilitazione
+C0166,Nord-Ovest,2026-05-15,11,496.54,13,Yoga e Pilates
+C0167,Nord-Est,2026-01-21,5,206.85,129,Cardio/HIIT
+C0168,Sud,2025-09-02,3,118.38,279,Cardio/HIIT
+C0169,Sud,2026-05-17,14,658.28,19,Cardio/HIIT
+C0170,Sud,2025-11-02,5,178.9,214,Yoga e Pilates
+C0171,Isole,2026-05-27,13,576.42,8,Yoga e Pilates
+C0172,Sud,2026-02-07,6,130.68,54,Yoga e Pilates
+C0173,Centro,2026-03-31,34,1474.24,16,Forza e tonificazione
+C0174,Nord-Est,2025-09-01,7,289.66,263,
+C0175,Nord-Est,2026-02-03,33,1107.81,11,Forza e tonificazione
+C0176,Isole,2025-10-29,43,1351.92,11,Forza e tonificazione
+C0177,Centro,2026-03-18,35,1749.65,20,Forza e tonificazione
+C0178,Sud,2026-01-27,2,70.08,117,Yoga e Pilates
+C0179,Nord-Ovest,2026-01-03,3,116.31,154,Cardio/HIIT
+C0180,Nord-Ovest,2025-07-16,8,192.48,56,Yoga e Pilates
+C0181,Nord-Est,2025-09-13,4,174.68,263,Forza e tonificazione
+C0182,Nord-Ovest,2026-01-22,2,80.42,136,Forza e tonificazione
+C0183,Sud,2025-09-02,6,153.72,52,Cardio/HIIT
+C0184,Sud,2026-03-31,22,1111.44,17,Cardio/HIIT
+C0185,Centro,2025-11-27,7,305.9,195,Cardio/HIIT
+C0186,Nord-Est,2026-04-16,1,26.27,51,Yoga e Pilates
+C0187,Centro,2026-05-23,12,551.52,12,Yoga e Pilates
+C0188,Nord-Ovest,2025-09-10,110,3730.1,10,Cardio/HIIT
+C0189,Centro,2025-11-05,4,90.4,44,Yoga e Pilates
+C0190,Nord-Ovest,2026-03-20,40,1977.6,8,Forza e tonificazione
+C0191,Nord-Ovest,2025-09-27,5,192.1,251,Cardio/HIIT
+C0192,Nord-Ovest,2025-12-27,56,2031.12,6,Forza e tonificazione
+C0193,Nord-Ovest,2025-12-30,45,1693.35,12,Postura e riabilitazione
+C0194,Centro,2025-12-25,5,210.25,165,Forza e tonificazione
+C0195,Centro,2025-08-02,92,3358.0,10,Postura e riabilitazione
+C0196,Sud,2025-12-15,43,1593.58,4,Postura e riabilitazione
+C0197,Centro,2026-04-17,1,22.57,67,Yoga e Pilates
+C0198,Nord-Ovest,2025-09-28,5,207.9,241,Postura e riabilitazione
+C0199,Nord-Ovest,2026-01-12,39,1326.0,11,Cardio/HIIT
+C0200,Sud,2026-04-06,23,1181.97,12,Postura e riabilitazione
+C0201,Isole,2025-09-01,3,110.43,271,Yoga e Pilates
+C0202,Nord-Est,2026-01-13,3,120.09,143,Cardio/HIIT
+C0203,Nord-Est,2025-10-17,7,197.12,54,Cardio/HIIT
+C0204,Nord-Est,2025-08-14,90,3044.7,5,Postura e riabilitazione
+C0205,Nord-Est,2025-12-30,57,2070.81,11,Postura e riabilitazione
+C0206,Nord-Est,2025-09-19,76,2907.76,8,Postura e riabilitazione
+C0207,Centro,2025-07-16,99,3991.68,9,Postura e riabilitazione
+C0208,Sud,2025-12-29,5,142.2,,Postura e riabilitazione
+C0209,Sud,2025-08-14,80,2976.8,5,Postura e riabilitazione
+C0210,Isole,2025-09-26,13,302.12,45,Yoga e Pilates
+C0211,Nord-Est,2025-12-08,8,200.56,43,Yoga e Pilates
+C0212,Centro,2026-01-24,5,116.6,81,Yoga e Pilates
+C0213,Nord-Est,2025-07-30,102,3424.14,12,Forza e tonificazione
+C0214,Nord-Ovest,2025-12-22,6,224.16,156,Cardio/HIIT
+C0215,Nord-Est,2026-03-05,3,72.63,,Yoga e Pilates
+C0216,Nord-Est,2026-01-13,5,129.9,44,Yoga e Pilates
+C0217,Centro,2025-10-15,65,2269.15,10,Forza e tonificazione
+C0218,Nord-Ovest,2025-08-24,90,3016.8,8,Cardio/HIIT
+C0219,Sud,2026-01-23,4,146.72,138,Yoga e Pilates
+C0220,Isole,2026-03-28,29,1417.23,12,Cardio/HIIT
+C0221,Isole,2026-04-04,26,1211.6,3,Cardio/HIIT
+C0222,Nord-Ovest,2025-12-29,8,253.28,,Postura e riabilitazione
+C0223,Nord-Ovest,2025-11-18,4,105.16,52,Postura e riabilitazione
+C0224,Isole,2026-01-01,6,237.3,163,Postura e riabilitazione
+C0225,Isole,2026-03-15,37,1887.0,24,Cardio/HIIT
+C0226,Centro,2025-12-22,3,111.15,162,Yoga e Pilates
+C0227,Nord-Est,2025-11-08,61,2282.62,9,Postura e riabilitazione
+C0228,Centro,2025-09-13,10,253.8,41,Yoga e Pilates
+C0229,Centro,2025-07-15,11,307.34,44,Cardio/HIIT
+C0230,Isole,2025-10-18,81,2694.87,3,Forza e tonificazione
+C0231,Centro,2025-08-17,63,2248.47,11,Cardio/HIIT
+C0232,Nord-Ovest,2026-04-01,26,1565.98,12,Postura e riabilitazione
+C0233,Sud,2025-09-30,6,265.26,251,Postura e riabilitazione
+C0234,Sud,2025-09-30,7,203.98,80,Postura e riabilitazione
+C0235,Nord-Est,2025-09-30,2,83.16,244,
+C0236,Nord-Ovest,2026-01-12,6,211.56,148,Forza e tonificazione
+C0237,Nord-Ovest,2025-08-31,8,201.68,64,Forza e tonificazione
+C0238,Isole,2026-01-11,6,231.6,137,Forza e tonificazione
+C0239,Centro,2025-12-06,60,1706.4,12,Yoga e Pilates
+C0240,Centro,2025-11-22,77,2860.55,9,Forza e tonificazione
+C0241,Isole,2025-09-08,6,219.72,258,Cardio/HIIT
+C0242,Nord-Ovest,2026-01-07,5,171.55,138,Yoga e Pilates
+C0243,Nord-Est,2025-08-03,94,2947.84,9,Yoga e Pilates
+C0244,Isole,2026-02-27,1,21.57,49,
+C0245,Centro,2025-11-05,5,135.5,27,Postura e riabilitazione
+C0246,Nord-Ovest,2025-09-01,7,283.85,265,Forza e tonificazione
+C0247,Sud,2026-03-14,3,74.64,34,Yoga e Pilates
+C0248,Nord-Ovest,2026-04-29,31,1476.22,1,Cardio/HIIT
+C0249,Sud,2026-03-04,47,2183.15,19,Forza e tonificazione
+C0250,Sud,2026-05-29,21,1006.95,15,Forza e tonificazione
+C0251,Isole,2025-08-06,19,507.49,65,Cardio/HIIT
+C0252,Centro,2026-01-30,5,202.5,120,Cardio/HIIT
+C0253,Nord-Est,2026-01-06,3,75.3,39,Forza e tonificazione
+C0254,Isole,2026-01-14,42,1586.76,12,Postura e riabilitazione
+C0255,Centro,2026-01-12,47,1668.97,11,Postura e riabilitazione
+C0256,Sud,2025-08-19,4,94.72,47,Cardio/HIIT
+C0257,Nord-Ovest,2025-12-05,4,173.28,170,Cardio/HIIT
+C0258,Sud,2025-08-23,107,3623.02,11,Cardio/HIIT
+C0259,Centro,2025-10-30,62,2308.26,9,Forza e tonificazione
+C0260,Nord-Est,2025-08-05,7,199.57,59,Postura e riabilitazione
+C0261,Sud,2026-02-26,47,1548.65,8,Forza e tonificazione
+C0262,Nord-Ovest,2025-09-11,5,195.05,254,Forza e tonificazione
+C0263,Sud,2026-04-25,27,1346.22,15,Cardio/HIIT
+C0264,Isole,2025-09-15,66,2237.4,3,Forza e tonificazione
+C0265,Centro,2025-10-09,5,208.6,229,Cardio/HIIT
+C0266,Nord-Ovest,2026-02-25,30,1023.0,9,Postura e riabilitazione
+C0267,Centro,2026-03-18,19,837.33,9,Cardio/HIIT
+C0268,Centro,2025-09-06,112,3385.76,12,Yoga e Pilates
+C0269,Centro,2025-10-22,78,2598.18,12,Forza e tonificazione
+C0270,Nord-Est,2025-07-09,76,2428.2,8,Cardio/HIIT
+C0271,Sud,2025-09-11,90,3383.1,12,Postura e riabilitazione
+C0272,Nord-Est,2025-12-15,60,2072.4,8,Postura e riabilitazione
+C0273,Centro,2025-12-02,51,1968.6,11,Postura e riabilitazione
+C0274,Centro,2025-11-09,2,53.94,60,Forza e tonificazione
+C0275,Sud,2025-08-25,15,313.05,75,Yoga e Pilates
+C0276,Sud,2026-04-09,18,879.3,8,Cardio/HIIT
+C0277,Isole,2026-05-17,17,779.28,13,Cardio/HIIT
+C0278,Sud,2026-03-24,1,27.92,21,Forza e tonificazione
+C0279,Sud,2026-01-12,7,262.01,143,Forza e tonificazione
+C0280,Isole,2026-01-05,3,116.7,150,Cardio/HIIT
+C0281,Nord-Est,2025-10-29,86,2740.82,10,Yoga e Pilates
+C0282,Nord-Est,2025-12-18,61,1961.15,8,Yoga e Pilates
+C0283,Centro,2025-08-23,82,2624.0,7,Yoga e Pilates
+C0284,Centro,2026-01-17,62,2103.66,7,Forza e tonificazione
+C0285,Sud,2026-02-19,1,22.74,64,Cardio/HIIT
+C0286,Nord-Ovest,2026-05-02,28,1374.24,12,Cardio/HIIT
+C0287,Nord-Ovest,2025-11-03,91,2682.68,5,Yoga e Pilates
+C0288,Sud,2026-05-11,12,583.2,16,Cardio/HIIT
+C0289,Isole,2025-07-22,12,280.68,29,Yoga e Pilates
+C0290,Nord-Est,2025-07-31,101,3428.95,8,Forza e tonificazione
+C0291,Nord-Est,2025-10-20,7,244.23,227,Yoga e Pilates
+C0292,Centro,2026-01-18,49,1646.89,4,Yoga e Pilates
+C0293,Centro,2025-09-15,8,320.16,270,Cardio/HIIT
+C0294,Nord-Ovest,2025-12-23,54,2038.5,9,Forza e tonificazione
+C0295,Centro,2026-01-31,8,321.28,110,Cardio/HIIT
+C0296,Isole,2025-09-04,3,125.28,272,Cardio/HIIT
+C0297,Sud,2026-01-25,6,219.3,115,Forza e tonificazione
+C0298,Isole,2025-09-30,4,174.4,,Cardio/HIIT
+C0299,Sud,2025-09-23,4,179.92,242,Postura e riabilitazione
+C0300,Isole,2026-01-09,3,72.48,50,Cardio/HIIT
+C0301,Nord-Est,2026-01-21,6,279.48,141,Postura e riabilitazione
+C0302,Nord-Ovest,2025-11-14,75,2259.0,7,Yoga e Pilates
+C0303,Nord-Ovest,2025-09-04,15,421.05,42,Forza e tonificazione
+C0304,Isole,2025-09-25,4,102.64,57,Cardio/HIIT
+C0305,Sud,2026-01-27,3,122.73,119,Forza e tonificazione
+C0306,Nord-Est,2026-01-28,4,104.64,66,Cardio/HIIT
+C0307,Isole,2026-03-18,34,1479.0,8,Yoga e Pilates
+C0308,Nord-Est,2026-04-18,1,22.45,48,Cardio/HIIT
+C0309,Centro,2026-05-03,27,1164.78,13,Forza e tonificazione
+C0310,Nord-Est,2025-11-17,67,2029.43,6,Forza e tonificazione
+C0311,Nord-Ovest,2026-04-21,1,22.27,50,Yoga e Pilates
+C0312,Nord-Est,2026-05-27,19,841.89,12,Cardio/HIIT
+C0313,Nord-Est,2025-11-25,89,3202.22,14,Postura e riabilitazione
+C0314,Centro,2026-04-18,21,1067.64,15,Cardio/HIIT
+C0315,Nord-Ovest,2026-03-27,22,986.26,13,Yoga e Pilates
+C0316,Nord-Est,2026-05-03,18,880.92,6,Forza e tonificazione
+C0317,Centro,2026-03-29,18,789.84,17,Yoga e Pilates
+C0318,Nord-Est,2025-09-20,12,309.96,62,Yoga e Pilates
+C0319,Sud,2026-05-24,22,1077.12,12,Postura e riabilitazione
+C0320,Sud,2025-09-11,2,82.98,268,Forza e tonificazione
+C0321,Isole,2025-09-20,2,75.7,250,Forza e tonificazione
+C0322,Isole,2025-09-01,7,185.43,66,Cardio/HIIT
+C0323,Nord-Est,2026-03-22,43,2301.36,10,Forza e tonificazione
+C0324,Sud,2025-09-09,9,247.68,44,Cardio/HIIT
+C0325,Sud,2025-09-20,5,199.2,255,Cardio/HIIT
+C0326,Centro,2025-09-07,12,289.92,47,Yoga e Pilates
+C0327,Sud,2026-01-11,5,216.9,148,Forza e tonificazione
+C0328,Nord-Ovest,2025-12-31,1,25.05,86,Forza e tonificazione
+C0329,Nord-Est,2025-12-29,7,167.58,42,Yoga e Pilates
+C0330,Isole,2026-05-20,11,522.61,15,Forza e tonificazione
+C0331,Isole,2025-09-16,14,394.94,35,Postura e riabilitazione
+C0332,Nord-Ovest,2025-08-18,100,2811.0,7,Yoga e Pilates
+C0333,Centro,2026-02-02,4,98.08,41,Forza e tonificazione
+C0334,Nord-Est,2025-09-06,3,110.88,267,Cardio/HIIT
+C0335,Nord-Ovest,2026-02-21,42,1429.68,9,Cardio/HIIT
+C0336,Nord-Ovest,2026-04-09,1,26.64,62,Cardio/HIIT
+C0337,Centro,2026-02-05,34,1159.74,12,Forza e tonificazione
+C0338,Sud,2026-04-20,2,45.6,37,Cardio/HIIT
+C0339,Centro,2026-01-31,47,1576.38,10,Forza e tonificazione
+C0340,Nord-Est,2025-09-14,5,196.95,272,Forza e tonificazione
+C0341,Sud,2025-08-19,82,2555.12,11,Forza e tonificazione
+C0342,Sud,2025-09-06,7,250.95,276,Yoga e Pilates
+C0343,Isole,2026-01-09,4,177.0,135,Forza e tonificazione
+C0344,Nord-Est,2026-03-06,3,62.82,51,Yoga e Pilates
+C0345,Nord-Est,2025-09-14,7,297.71,268,Forza e tonificazione
+C0346,Centro,2025-11-26,6,227.4,196,Cardio/HIIT
+C0347,Centro,2026-01-29,6,253.32,121,Cardio/HIIT
+C0348,Centro,2026-03-01,41,2066.81,18,Cardio/HIIT
+C0349,Isole,2025-11-28,3,77.43,41,Cardio/HIIT
+C0350,Nord-Ovest,2025-11-01,66,2398.44,4,Postura e riabilitazione
+C0351,Centro,2025-08-18,7,211.82,25,Postura e riabilitazione
+C0352,Centro,2025-12-05,49,1571.43,2,Yoga e Pilates
+C0353,Nord-Est,2026-04-16,1,25.7,49,Yoga e Pilates
+C0354,Sud,2026-04-23,1,24.38,44,Cardio/HIIT
+C0355,Isole,2025-07-14,6,152.34,53,Cardio/HIIT
+C0356,Centro,2025-12-28,4,86.32,79,Yoga e Pilates
+C0357,Nord-Ovest,2026-01-12,7,286.58,137,Forza e tonificazione
+C0358,Nord-Ovest,2026-01-05,3,110.04,151,Cardio/HIIT
+C0359,Centro,2025-12-30,13,349.31,61,Postura e riabilitazione
+C0360,Sud,2026-04-01,2,54.0,62,Postura e riabilitazione
+C0361,Nord-Est,2025-12-19,8,382.56,157,Postura e riabilitazione
+C0362,Nord-Est,2025-08-04,89,2812.4,8,Yoga e Pilates
+C0363,Isole,2025-11-25,52,1900.6,10,
+C0364,Nord-Ovest,2026-02-16,26,985.4,9,Forza e tonificazione
+C0365,Nord-Ovest,2025-09-28,4,103.36,59,Forza e tonificazione
+C0366,Nord-Ovest,2026-05-04,17,920.38,7,Postura e riabilitazione
+C0367,Isole,2025-12-17,3,95.61,162,Yoga e Pilates
+C0368,Centro,2025-12-10,9,254.88,41,Cardio/HIIT
+C0369,Nord-Ovest,2026-03-06,32,1468.48,,Yoga e Pilates
+C0370,Nord-Est,2025-09-10,7,258.51,271,Yoga e Pilates
+C0371,Isole,2026-01-12,6,256.44,146,Forza e tonificazione
+C0372,Sud,2026-04-28,26,1159.6,15,Yoga e Pilates
+C0373,Nord-Est,2026-05-25,12,554.04,10,Cardio/HIIT
+C0374,Nord-Est,2026-04-06,20,,19,Postura e riabilitazione
+C0375,Nord-Ovest,2025-11-18,73,2503.9,10,Cardio/HIIT
+C0376,Sud,2025-07-28,93,3057.84,8,Cardio/HIIT
+C0377,Nord-Ovest,2026-01-27,5,189.5,121,
+C0378,Nord-Est,2026-04-10,25,1291.25,11,Cardio/HIIT
+C0379,Nord-Est,2026-05-09,20,784.4,24,Yoga e Pilates
+C0380,Sud,2026-03-25,3,68.67,68,Yoga e Pilates
+C0381,Sud,2025-09-30,6,126.72,47,Yoga e Pilates
+C0382,Sud,2026-01-13,6,,144,Forza e tonificazione
+C0383,Nord-Est,2025-09-09,3,115.8,266,Yoga e Pilates
+C0384,Nord-Est,2025-07-23,10,256.2,58,Cardio/HIIT
+C0385,Nord-Est,2026-04-16,15,767.4,18,Forza e tonificazione
+C0386,Nord-Ovest,2026-01-12,4,160.2,137,Cardio/HIIT
+C0387,Sud,2025-10-08,7,173.39,54,Forza e tonificazione
+C0388,Centro,2025-09-10,5,191.5,264,Cardio/HIIT
+C0389,Centro,2025-10-25,85,2610.35,10,Yoga e Pilates
+C0390,Isole,2025-09-15,4,163.24,267,Forza e tonificazione
+C0391,Nord-Ovest,2025-10-29,13,334.36,29,Postura e riabilitazione
+C0392,Isole,2025-07-31,99,3314.52,5,Cardio/HIIT
+C0393,Sud,2025-11-17,9,252.72,53,Cardio/HIIT
+C0394,Nord-Est,2025-12-09,5,108.75,55,Yoga e Pilates
+C0395,Sud,2025-10-31,70,2704.8,2,Postura e riabilitazione
+C0396,Sud,2026-01-04,6,160.32,86,Forza e tonificazione
+C0397,Nord-Est,2025-09-25,4,,258,Forza e tonificazione
+C0398,Nord-Est,2026-03-04,45,2005.2,12,Yoga e Pilates
+C0399,Isole,2025-11-26,13,378.17,52,Cardio/HIIT
+C0400,Nord-Ovest,2026-04-06,31,1690.43,18,Postura e riabilitazione
+C0401,Nord-Ovest,2026-05-11,17,835.04,16,Cardio/HIIT
+C0402,Sud,2025-09-03,6,224.94,279,Forza e tonificazione
+C0403,Isole,2025-09-21,3,104.37,261,Yoga e Pilates
+C0404,Centro,2025-08-02,94,3255.22,5,Forza e tonificazione
+C0405,Nord-Ovest,2026-01-15,6,215.22,145,Yoga e Pilates
+C0406,Centro,2025-09-09,5,200.9,266,
+C0407,Nord-Est,2026-04-13,18,1017.36,9,Postura e riabilitazione
+C0408,Isole,2026-01-30,5,216.5,107,Forza e tonificazione
+C0409,Sud,2025-08-06,81,2653.56,8,Cardio/HIIT
+C0410,Nord-Est,2026-01-15,7,265.86,146,Cardio/HIIT
+C0411,Sud,2026-03-25,6,145.14,58,Forza e tonificazione
+C0412,Sud,2025-11-13,5,126.1,50,Cardio/HIIT
+C0413,Sud,2025-12-03,67,2263.93,7,Forza e tonificazione
+C0414,Nord-Est,2025-10-09,3,121.89,233,Cardio/HIIT
+C0415,Centro,2025-10-08,81,2665.71,11,Forza e tonificazione
+C0416,Nord-Ovest,2025-12-12,51,2026.23,9,Postura e riabilitazione
+C0417,Centro,2025-07-22,86,2500.02,7,Yoga e Pilates
+C0418,Nord-Est,2025-09-16,7,290.15,257,Forza e tonificazione
+C0419,Centro,2025-11-04,63,2473.38,5,Postura e riabilitazione
+C0420,Isole,2025-10-13,5,173.6,230,Yoga e Pilates
+C0421,Isole,2026-03-20,3,73.35,88,Yoga e Pilates
+C0422,Centro,2026-01-02,59,1941.69,6,Yoga e Pilates
+C0423,Sud,2025-08-23,71,2718.59,4,Postura e riabilitazione
+C0424,Nord-Ovest,2025-07-16,81,2856.06,11,Cardio/HIIT
+C0425,Centro,2025-12-20,5,140.55,44,Postura e riabilitazione
+C0426,Sud,2025-09-10,5,185.15,258,Forza e tonificazione
+C0427,Sud,2025-09-11,76,2663.8,11,Cardio/HIIT
+C0428,Isole,2025-09-20,2,73.02,251,Yoga e Pilates
+C0429,Centro,2025-11-13,59,1905.11,4,Forza e tonificazione
+C0430,Isole,2025-09-15,4,128.44,249,Yoga e Pilates
+C0431,Isole,2025-12-24,3,141.27,151,Postura e riabilitazione
+C0432,Centro,2025-12-05,3,105.39,166,Yoga e Pilates
+C0433,Nord-Ovest,2026-02-16,2,48.98,46,Forza e tonificazione
+C0434,Nord-Est,2025-09-19,4,141.8,244,Cardio/HIIT
+C0435,Sud,2025-09-15,67,2125.91,5,Yoga e Pilates
+C0436,Centro,2025-12-29,56,1942.08,4,Forza e tonificazione
+C0437,Isole,2026-02-10,41,1469.03,10,
+C0438,Isole,2026-01-01,6,134.34,28,Yoga e Pilates
+C0439,Nord-Ovest,2025-07-29,15,344.1,56,Yoga e Pilates
+C0440,Isole,2025-09-17,7,200.2,30,Postura e riabilitazione
+C0441,Nord-Est,2026-01-02,3,119.61,157,Forza e tonificazione
+C0442,Isole,2025-10-19,87,2379.45,5,Yoga e Pilates
+C0443,Centro,2025-09-23,5,130.3,74,Forza e tonificazione
+C0444,Centro,2025-12-17,55,1762.75,4,Forza e tonificazione
+C0445,Nord-Ovest,2026-05-17,18,845.1,9,Forza e tonificazione
+C0446,Nord-Ovest,2025-08-31,7,191.94,57,Forza e tonificazione
+C0447,Centro,2025-09-03,6,256.14,276,Forza e tonificazione
+C0448,Centro,2025-10-18,3,83.34,56,Forza e tonificazione
+C0449,Centro,2026-01-29,39,1454.31,8,Forza e tonificazione
+C0450,Nord-Ovest,2026-01-18,2,46.5,30,Yoga e Pilates
+C0451,Centro,2025-10-04,83,3106.69,8,Postura e riabilitazione
+C0452,Nord-Ovest,2025-12-19,4,139.64,168,Yoga e Pilates
+C0453,Nord-Ovest,2026-03-27,9,245.07,44,Postura e riabilitazione
+C0454,Centro,2026-01-12,33,997.26,5,Cardio/HIIT
+C0455,Sud,2025-10-14,86,3180.28,6,Postura e riabilitazione
+C0456,Sud,2025-11-17,71,2034.86,8,Yoga e Pilates
+C0457,Isole,2026-01-14,3,111.84,138,Yoga e Pilates
+C0458,Isole,2025-11-03,7,151.2,51,Yoga e Pilates
+C0459,Nord-Est,2026-01-12,5,189.95,137,
+C0460,Sud,2025-10-03,13,,,Postura e riabilitazione
+C0461,Nord-Ovest,2026-01-21,7,213.29,42,
+C0462,Isole,2025-09-24,82,2379.64,12,Yoga e Pilates
+C0463,Nord-Est,2025-09-22,5,185.9,238,Yoga e Pilates
+C0464,Sud,2026-04-14,31,1578.21,4,Cardio/HIIT
+C0465,Isole,2025-10-10,5,103.25,47,Yoga e Pilates
+C0466,Sud,2026-02-07,6,157.2,39,Forza e tonificazione
+C0467,Isole,2026-02-22,6,,87,Yoga e Pilates
+C0468,Nord-Ovest,2026-01-03,3,113.13,156,Yoga e Pilates
+C0469,Nord-Ovest,2025-08-30,88,2995.52,6,Cardio/HIIT
+C0470,Sud,2025-12-24,4,85.96,85,Yoga e Pilates
+C0471,Centro,2026-05-23,6,267.84,13,
+C0472,Nord-Ovest,2026-04-21,1,21.91,60,Yoga e Pilates
+C0473,Sud,2025-09-11,90,3302.1,8,Postura e riabilitazione
+C0474,Nord-Ovest,2025-12-08,63,2180.43,14,Cardio/HIIT
+C0475,Isole,2026-05-06,12,620.76,11,Cardio/HIIT
+C0476,Nord-Ovest,2026-04-04,28,1467.48,20,Postura e riabilitazione
+C0477,Centro,2026-04-05,28,1384.04,9,Cardio/HIIT
+C0478,Isole,2026-04-10,4,93.64,68,Yoga e Pilates
+C0479,Centro,2025-09-19,4,114.88,46,Cardio/HIIT
+C0480,Sud,2026-05-21,10,479.2,,Forza e tonificazione
+C0481,Sud,2026-05-10,18,784.8,19,Cardio/HIIT
+C0482,Isole,2025-12-29,50,1905.5,6,Postura e riabilitazione
+C0483,Centro,2026-01-16,12,308.28,65,Yoga e Pilates
+C0484,Isole,2026-04-24,21,1081.5,,Cardio/HIIT
+C0485,Centro,2026-01-29,44,1551.88,4,Cardio/HIIT
+C0486,Isole,2026-04-22,23,1175.07,22,Cardio/HIIT
+C0487,Sud,2026-04-03,3,72.09,45,Yoga e Pilates
+C0488,Nord-Ovest,2025-10-10,62,1905.26,4,Yoga e Pilates
+C0489,Sud,2025-11-02,9,248.58,56,Cardio/HIIT
+C0490,Isole,2025-10-09,5,122.8,51,Forza e tonificazione
+C0491,Nord-Ovest,2026-04-08,8,211.28,34,
+C0492,Isole,2025-12-12,2,51.3,65,Forza e tonificazione
+C0493,Nord-Ovest,2025-09-17,7,164.99,64,Forza e tonificazione
+C0494,Isole,2026-04-17,28,1451.52,10,Cardio/HIIT
+C0495,Sud,2025-09-25,3,118.59,237,Forza e tonificazione
+C0496,Nord-Ovest,2026-02-25,7,171.78,85,Yoga e Pilates
+C0497,Sud,2026-03-12,42,2162.58,14,Cardio/HIIT
+C0498,Nord-Ovest,2026-04-29,1,23.46,53,Yoga e Pilates
+C0499,Centro,2026-03-19,29,1444.49,10,Forza e tonificazione
+C0500,Isole,2025-10-29,10,200.5,65,Yoga e Pilates
