@@ -1,6 +1,7 @@
 """Analisi dei clienti AllenaOra: preparazione dei dati, K-Means, profili e validazione"""
 from pathlib import Path
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
 
 CARTELLA_DATI = Path(__file__).parent / "data"
 FILE_CLIENTI = CARTELLA_DATI/ "clienti.csv"
@@ -40,6 +41,14 @@ def prepara_feature(clienti):
     """Restituisce la matrice delle feature: solo R, F e M, nell'ordine di COLONNE_RFM."""
     return clienti[COLONNE_RFM]
 
+def standardizza(X):
+    """Standardizza R, F e M (z-score: media 0, deviazione standard 1).
+    Restituisce la matrice standardizzata (array NumPy) e lo scaler addestrato,
+    che serve a standardizzare i nuovi clienti con le stesse medie e deviazioni standard."""
+    scaler = StandardScaler()
+    X_std = scaler.fit_transform(X)
+    return X_std, scaler
+
 
 def main():
     clienti = carica_dati(FILE_CLIENTI)
@@ -68,6 +77,12 @@ def main():
     X = prepara_feature(clienti)
     print("Forma della matrice delle feature:", X.shape)
     print(X.describe().round(2))
+
+    # Passo 4: standardizzazione
+    X_std, scaler = standardizza(X)
+    print("Medie usate:", scaler.mean_.round(2))
+    print("Deviazioni standard usate:", scaler.scale_.round(2))
+    print(pd.DataFrame(X_std, columns=COLONNE_RFM).describe().round(2))
 
 
 if __name__ == "__main__":
