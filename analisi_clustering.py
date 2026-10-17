@@ -90,6 +90,16 @@ def salva_grafici(confronto):
     fig.savefig(CARTELLA_OUTPUT / "grafico_silhouette.png", dpi=150)
     plt.close(fig)
 
+def descrivi_candidati(X_std, scaler):
+    """Per ogni k candidato stampa numerosità dei cluster e centroidi
+    riportati come: giorni, sessioni, euro"""
+    for k in K_CANDIDATI:
+        modello = KMeans(n_clusters=k, random_state=SEED, n_init=10).fit(X_std)
+        centroidi =pd.DataFrame(scaler.inverse_transform(modello.cluster_centers_),
+                                columns=["R_giorni", "F_sessioni", "M_euro"])
+        centroidi["numerosita"] = pd.Series(modello.labels_).value_counts().sort_index()
+        print(f"\nk = {k}")
+        print(centroidi.round(1))
 def main():
     clienti = carica_dati(FILE_CLIENTI)
 
@@ -129,7 +139,7 @@ def main():
     confronto.to_csv(CARTELLA_OUTPUT / "confronto_k.csv", index=False)
     print(confronto.round(3))
     salva_grafici(confronto)
-
+    descrivi_candidati(X_std, scaler)
 
 if __name__ == "__main__":
     main()
