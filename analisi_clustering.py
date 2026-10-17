@@ -4,6 +4,7 @@ import pandas as pd
 
 CARTELLA_DATI = Path(__file__).parent / "data"
 FILE_CLIENTI = CARTELLA_DATI/ "clienti.csv"
+COLONNE_RFM = ["giorni_ultima_sessione", "num_sessioni", "importo_medio"]  # R, F, M in quest'ordine
 
 def carica_dati(percorso):
     """Legge il CSV dei clienti, con la data di iscrizione letta come data."""
@@ -34,6 +35,12 @@ def sostituisci_mancanti(clienti):
     print(f"Mediana importo medio: {mediana_m:.2f} - mediana giorni: {mediana_r} - moda categoria: {moda_cat}")
     return clienti, record_toccati
 
+
+def prepara_feature(clienti):
+    """Restituisce la matrice delle feature: solo R, F e M, nell'ordine di COLONNE_RFM."""
+    return clienti[COLONNE_RFM]
+
+
 def main():
     clienti = carica_dati(FILE_CLIENTI)
 
@@ -57,9 +64,11 @@ def main():
     print("Mancanti dopo la sostituzione:", int(clienti.isna().sum().sum()))
     print("Forma dopo la sostituzione:", clienti.shape)
 
-    # analisi_clustering.py (dentro main, temporaneo)
-    anzianita = (pd.Timestamp("2026-06-30") - clienti["data_iscrizione"]).dt.days
-    print("Giorni oltre l'anzianità:", int((clienti["giorni_ultima_sessione"] > anzianita).sum()))
+    # Passo 3: matrice delle feature RFM
+    X = prepara_feature(clienti)
+    print("Forma della matrice delle feature:", X.shape)
+    print(X.describe().round(2))
+
 
 if __name__ == "__main__":
     main()
