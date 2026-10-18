@@ -14,7 +14,7 @@ CARTELLA_OUTPUT = Path(__file__).parent / "output"
 SEED = 42
 VALORI_K= range(2,9) #i valori sono da 2 a 8 compresi, il 9 è escluso
 K_CANDIDATI = [3,4,5]
-
+K_SCELTO = 4
 
 def carica_dati(percorso):
     """Legge il CSV dei clienti, con la data di iscrizione letta come data."""
@@ -100,6 +100,14 @@ def descrivi_candidati(X_std, scaler):
         centroidi["numerosita"] = pd.Series(modello.labels_).value_counts().sort_index()
         print(f"\nk = {k}")
         print(centroidi.round(1))
+
+def assegna_cluster(clienti, X_std):
+    """Addestra il modello finale con K_SCELTO cluster e aggiunge una colonna in cluster"""
+    clienti = clienti.copy()
+    modello = KMeans(n_clusters=K_SCELTO, random_state=SEED, n_init=10)
+    clienti["cluster"] = modello.fit_predict(X_std)
+    return clienti, modello
+
 def main():
     clienti = carica_dati(FILE_CLIENTI)
 
@@ -140,6 +148,12 @@ def main():
     print(confronto.round(3))
     salva_grafici(confronto)
     descrivi_candidati(X_std, scaler)
+
+    clienti, modello = assegna_cluster(clienti, X_std)
+    print("Clienti per cluster:")
+    print(clienti["cluster"].value_counts().sort_index())
+    clienti.to_csv(CARTELLA_OUTPUT / "clienti_con_cluster.csv", index=False)
+
 
 if __name__ == "__main__":
     main()
