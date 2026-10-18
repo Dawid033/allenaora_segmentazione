@@ -5,10 +5,11 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
-
+from sklearn.metrics import adjusted_rand_score
 
 CARTELLA_DATI = Path(__file__).parent / "data"
 FILE_CLIENTI = CARTELLA_DATI/ "clienti.csv"
+FILE_SEGMENTI = CARTELLA_DATI / "segmenti_veri.csv"
 COLONNE_RFM = ["giorni_ultima_sessione", "num_sessioni", "importo_medio"]  # R, F, M in quest'ordine
 CARTELLA_OUTPUT = Path(__file__).parent / "output"
 SEED = 42
@@ -174,6 +175,17 @@ def aggiungi_nomi(profili):
     profili["azione"]=profili["cluster"].map(AZIONI_CLUSTER)
     return profili
 
+def valida_cluster(clienti, percorso_segmenti):
+    """confronta i cluster con i segmenti veri, cioè tabella incrociata e ARI"""
+    segmenti =pd.read_csv(percorso_segmenti)
+    unione=clienti.merge(segmenti, on="id_cliente", validate="one_to_one")
+    if len(unione) != len(clienti):
+        raise ValueError("Alcuni clienti non hanno un segmento vero corrispondente")
+    tabella = pd.crosstab(unione["cluster"], unione["segmento"])
+    ari = adjusted_rand_score(unione["segmento"], unione["cluster"])
+    return tabella, ari
+
+
 def main():
     clienti = carica_dati(FILE_CLIENTI)
 
@@ -224,6 +236,14 @@ def main():
     profili=aggiungi_nomi(profili)
     print(profili.set_index("cluster").T.to_string())
     profili.to_csv(CARTELLA_OUTPUT / "profili_cluster.csv", index=False)
+    tabella, ari = valida_cluster(clienti, FILE_SEGMENTI)
+    print("Tabella incrociata cluster x segmento vero:")
+    print(tabella)
+    print(f"ARI: {ari:.3f}\n") 
+    percorso_validazione = CARTELLA_OUTPUT / "validazione.csv"
+    tabella.to_csv(percorso_validazione)
+    with open(percorso_validazione, "a") as f:
+        f.write(f"ARI,{ari:.3f}\n")
 
 if __name__ == "__main__":
     main()
