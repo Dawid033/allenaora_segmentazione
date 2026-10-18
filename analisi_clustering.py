@@ -108,6 +108,40 @@ def assegna_cluster(clienti, X_std):
     clienti["cluster"] = modello.fit_predict(X_std)
     return clienti, modello
 
+def valore_prevalente(serie):
+    #restituisce il valore più frequente
+    #se c'è parità il primo in ordine
+    return serie.mode()[0]
+
+def quota_prevalente(serie):
+    #restituisce la quota in percentuale del valore più frequente
+    return serie.value_counts(normalize=True).iloc[0]*100
+
+def calcola_profili(clienti):
+    """Calcola il profilo di ogni cluster: medie RFM, numerosità
+    fatturato e valori più frequenti"""
+    clienti=clienti.copy()
+    clienti["mese_iscrizione"] = clienti["data_iscrizione"].dt.strftime("%Y-%m")
+
+    profili = clienti.groupby("cluster").agg(
+         numerosita=("id_cliente", "count"),
+        R_media_giorni=("giorni_ultima_sessione", "mean"),
+        F_media_sessioni=("num_sessioni", "mean"),
+        M_media_euro=("importo_medio", "mean"),
+        importo_totale_medio=("importo_totale", "mean"),
+        fatturato=("importo_totale", "sum"),
+        categoria_prevalente=("categoria_preferita", valore_prevalente),
+        quota_categoria=("categoria_preferita", quota_prevalente),
+        zona_prevalente=("zona", valore_prevalente),
+        quota_zona=("zona", quota_prevalente),
+        mese_frequente=("mese_iscrizione", valore_prevalente),
+        quota_mese=("mese_iscrizione", quota_prevalente),
+    )
+    profili["quota_clienti"] = profili["numerosita"] / profili["numerosita"].sum()*100
+    profili["quota_fatturato"] = profili["fatturato"] / profili ["fatturato"].sum()*100
+    return profili.round(2).reset_index()
+
+
 def main():
     clienti = carica_dati(FILE_CLIENTI)
 
@@ -153,6 +187,10 @@ def main():
     print("Clienti per cluster:")
     print(clienti["cluster"].value_counts().sort_index())
     clienti.to_csv(CARTELLA_OUTPUT / "clienti_con_cluster.csv", index=False)
+
+    profili = calcola_profili(clienti)
+    print(profili.set_index("cluster").T.to_string())
+    profili.to_csv(CARTELLA_OUTPUT / "profili_cluster.csv", index=False)
 
 
 if __name__ == "__main__":
