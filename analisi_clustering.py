@@ -157,7 +157,7 @@ def controlla_nomi(profili):
     """verifica che i nomi dei cluster corrispondano ancora ai vari profili"""
     p= profili.set_index("cluster")
     corrispondono=(
-        p["F_media_sessioni"].idxmax()==1
+        p["F_media_sessioni"].idxmax()==0
         and p["M_media_euro"].idxmax()==1
         and p["M_media_euro"].idxmin()==2
         and p["R_media_giorni"].idxmax()==3
