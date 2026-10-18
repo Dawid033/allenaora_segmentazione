@@ -15,6 +15,18 @@ SEED = 42
 VALORI_K= range(2,9) #i valori sono da 2 a 8 compresi, il 9 è escluso
 K_CANDIDATI = [3,4,5]
 K_SCELTO = 4
+NOMI_CLUSTER= {
+    0: "Fedelissimi assidui",
+    1: "Intensivi",
+    2: "Saltuari",
+    3: "Inattivi",
+}
+AZIONI_CLUSTER={
+    0: "Fidelizzare: abbonamento o pacchetto a prezzo bloccato/Programma porta un amico",
+    1: "Trattenere: pacchetto per aumentarne la continuità/proposte di ripresa post estate",
+    2: "Aumentare la frequenza: promemoria personalizzati e pacchetti da 5 sessioni a prezzo bloccato",
+    3: "Riattivare: campagna di rientro a gennaio e/o settembre con una sessione di prova"
+}
 
 def carica_dati(percorso):
     """Legge il CSV dei clienti, con la data di iscrizione letta come data."""
@@ -141,6 +153,26 @@ def calcola_profili(clienti):
     profili["quota_fatturato"] = profili["fatturato"] / profili ["fatturato"].sum()*100
     return profili.round(2).reset_index()
 
+def controlla_nomi(profili):
+    """verifica che i nomi dei cluster corrispondano ancora ai vari profili"""
+    p= profili.set_index("cluster")
+    corrispondono=(
+        p["F_media_sessioni"].idxmax()==1
+        and p["M_media_euro"].idxmax()==1
+        and p["M_media_euro"].idxmin()==2
+        and p["R_media_giorni"].idxmax()==3
+    )
+    if not corrispondono:
+        raise ValueError("I cluster non corrispondono più ai nomi in questo momento: " \
+        "rileggere i profili e aggiornare NOMI_CLUSTER")
+
+def aggiungi_nomi(profili):
+    """Aggiunge ai profili il nome e l'azione di marketing di ogni cluster"""
+    controlla_nomi(profili)
+    profili=profili.copy()
+    profili["nome"]=profili["cluster"].map(NOMI_CLUSTER)
+    profili["azione"]=profili["cluster"].map(AZIONI_CLUSTER)
+    return profili
 
 def main():
     clienti = carica_dati(FILE_CLIENTI)
@@ -188,10 +220,10 @@ def main():
     print(clienti["cluster"].value_counts().sort_index())
     clienti.to_csv(CARTELLA_OUTPUT / "clienti_con_cluster.csv", index=False)
 
-    profili = calcola_profili(clienti)
+    profili=calcola_profili(clienti)
+    profili=aggiungi_nomi(profili)
     print(profili.set_index("cluster").T.to_string())
     profili.to_csv(CARTELLA_OUTPUT / "profili_cluster.csv", index=False)
-
 
 if __name__ == "__main__":
     main()
