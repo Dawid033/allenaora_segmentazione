@@ -6,12 +6,14 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from sklearn.metrics import adjusted_rand_score
+import joblib
 
 CARTELLA_DATI = Path(__file__).parent / "data"
 FILE_CLIENTI = CARTELLA_DATI/ "clienti.csv"
 FILE_SEGMENTI = CARTELLA_DATI / "segmenti_veri.csv"
 COLONNE_RFM = ["giorni_ultima_sessione", "num_sessioni", "importo_medio"]  # R, F, M in quest'ordine
 CARTELLA_OUTPUT = Path(__file__).parent / "output"
+FILE_MODELLO = CARTELLA_OUTPUT / "modello.joblib"
 SEED = 42
 VALORI_K= range(2,9) #i valori sono da 2 a 8 compresi, il 9 è escluso
 K_CANDIDATI = [3,4,5]
@@ -185,6 +187,9 @@ def valida_cluster(clienti, percorso_segmenti):
     ari = adjusted_rand_score(unione["segmento"], unione["cluster"])
     return tabella, ari
 
+def salva_modello(scaler, modello, percorso):
+    """salva scaler e modello addestrati in un unico file joblib"""
+    joblib.dump({"scaler": scaler, "modello": modello}, percorso)
 
 def main():
     clienti = carica_dati(FILE_CLIENTI)
@@ -244,6 +249,9 @@ def main():
     tabella.to_csv(percorso_validazione)
     with open(percorso_validazione, "a") as f:
         f.write(f"ARI,{ari:.3f}\n")
+
+    salva_modello(scaler, modello, FILE_MODELLO)
+    print("Scaler e modello salvati in", FILE_MODELLO)
 
 if __name__ == "__main__":
     main()
