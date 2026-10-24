@@ -7,6 +7,7 @@ from pathlib import Path
 import joblib
 import pandas as pd
 import streamlit as st
+import matplotlib.pyplot as plt
 
 CARTELLA_OUTPUT = Path(__file__).parent / "output"
 FILE_CLIENTI = CARTELLA_OUTPUT / "clienti_con_cluster.csv"
@@ -14,6 +15,14 @@ FILE_PROFILI = CARTELLA_OUTPUT / "profili_cluster.csv"
 FILE_CONFRONTO = CARTELLA_OUTPUT / "confronto_k.csv"
 FILE_MODELLO = CARTELLA_OUTPUT / "modello.joblib"
 COLONNA_SILHOUETTE = "silhouette"
+
+ETICHETTE_ASSI = {
+    "R - giorni dall'ultima sessione" : "giorni_ultima_sessione",
+    "F - numero di sessioni": "num_sessioni",
+    "M - importo medio per sessione ": "importo_medio",
+}
+
+COLORI_CLUSTER = {0: "tab:green", 1: "tab:purple", 2:"tab:orange", 3: "tab:gray"}
 
 def controlla_file():
     """se manca uno dei file -> ferma la pagina"""
@@ -71,6 +80,32 @@ def applica_filtri(clienti, zone, periodo, categorie):
     )
     return clienti[maschera]
 
+def disegna_scatter(filtrati, nomi_cluster):
+    """Scatter dei clienti filtrati su due variabili scelte, un colore fisso per cluster."""
+    st.subheader("Clienti per cluster")
+
+    etichette = list(ETICHETTE_ASSI.keys())
+    sinistra, destra = st.columns(2)
+    etichetta_x = sinistra.selectbox("Asse x", etichette, index=0)
+    etichetta_y = destra.selectbox("Asse y", etichette, index=1)
+    colonna_x = ETICHETTE_ASSI[etichetta_x]
+    colonna_y = ETICHETTE_ASSI[etichetta_y]
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    for numero, gruppo in filtrati.groupby("cluster"):
+        ax.scatter(
+            gruppo[colonna_x],
+            gruppo[colonna_y],
+            color=COLORI_CLUSTER[numero],
+            label=f"{numero} – {nomi_cluster[numero]}",
+            alpha=0.6,
+        )
+    ax.set_xlabel(etichetta_x)
+    ax.set_ylabel(etichetta_y)
+    ax.legend(title="Cluster")
+    fig.tight_layout()
+    st.pyplot(fig)
+    plt.close(fig)
 
 def main():
     st.set_page_config(page_title="AllenaOra – Segmentazione", layout="wide")
@@ -79,6 +114,7 @@ def main():
     controlla_file()
     clienti, profili, confronto = carica_tabelle()
     scaler, modello = carica_modello()
+    nomi_cluster = dict(zip(profili["cluster"], profili["nome"]))
 
     zone, periodo, categorie = filtri_sidebar(clienti)
     if len(periodo) != 2:
@@ -96,7 +132,8 @@ def main():
 
     if filtrati.empty:
         st.warning("Nessun cliente corrisponde ai filtri selezionati.")
-
+    else:
+        disegna_scatter(filtrati, nomi_cluster)
 
 if __name__ == "__main__":
     main()
