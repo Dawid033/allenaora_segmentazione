@@ -118,7 +118,6 @@ def poisson_troncata(rng,minimo,massimo):
     return int(valore)
 
 def estrai_num_sessioni(rng, regole, anzianita):
-
     minimo, massimo = regole["ritmo_mensile"]
     ritmo= rng.uniform(minimo,massimo)
     mesi= anzianita / GIORNI_PER_MESE
@@ -127,19 +126,16 @@ def estrai_num_sessioni(rng, regole, anzianita):
     return max(1,int(n)) 
 
 def estrai_categoria(rng,regole):
-    """Estrae la categoria preferita con le probabilità del segmento"""
+    #Estrae la categoria preferita con le probabilità del segmento
     return str(rng.choice(CATEGORIE, p=regole["prob_categorie"])) 
 
 def estrai_prezzo_sessione(rng, regole, categoria):
-    """Prezzo per sessione: base del segmento (normale troncata, D18)
-    con il ritocco della categoria (D04)."""
+    #Prezzo per sessione: base del segmento (normale troncata, D18) con il ritocco della categoria (D04).
     minimo, massimo = regole["prezzo_base"]
     prezzo_base = normale_troncata(rng, minimo, massimo)
     return round(float(prezzo_base) * MOLTIPLICATORE_CATEGORIA[categoria], 2)
 
 def inserisci_mancanti(rng,valori,quota):
-    """Resituisce una copia di valori in cui ogni elemento diventa None con probabilità
-    pari a quota e il numero di valori resi manncanti"""
     mancante= rng.random(len(valori)) < quota
     nuovi = [None if m else v for v, m in zip(valori,mancante)]
     return nuovi, int(mancante.sum())

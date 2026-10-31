@@ -1,4 +1,4 @@
-#avvio: stramlit run dashboard.py -> dopo genera_dati e analisi_clustering
+#avvio: strereamamlit run dashboard.py -> dopo genera_dati e analisi_clustering
 
 from pathlib import Path
 
