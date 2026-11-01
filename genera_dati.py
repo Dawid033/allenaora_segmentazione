@@ -1,5 +1,5 @@
 """Genera il dataset simulato dei clienti di AllenaOra (Iscritti tra Luglio 2025 e Giugno 2026)
-Produce data/clienti.csv e data/segmenti_veri.csv (usati solo per la validazione)
+Produce data/clienti.csv e data/segmenti_veri.csv (usato solo per la validazione)
 Uso: python genera_dati.py ed utilizzando lo stesso SEED il dataset è
 sempre identico"""
 
