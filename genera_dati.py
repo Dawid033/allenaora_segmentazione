@@ -1,5 +1,5 @@
 """Genera il dataset simulato dei clienti di AllenaOra (Iscritti tra Luglio 2025 e Giugno 2026)
-Produce data/clienti.csv e data/segmenti_veri.csv
+Produce data/clienti.csv e data/segmenti_veri.csv (usati solo per la validazione)
 Uso: python genera_dati.py ed utilizzando lo stesso SEED il dataset è
 sempre identico"""
 
@@ -91,7 +91,7 @@ print("Controllo categorie completo")
 
 """Estrae la data di iscrizione di un cliente secondo le regole del suo segmento
     Questa estrazione avviene in due passi: prima il mese, scelto tra i mesi tipici
-    della categoria del segmento, altrimenti un mese tra quelli ammessi; poi viene estratto il giorno"""
+    del segmento, altrimenti un mese tra quelli ammessi; poi viene estratto il giorno"""
 def estrai_data_iscrizione(rng, regole):
     if rng.random() < regole["quota_tipici"]:
         mesi = regole["mesi_tipici"]
@@ -175,7 +175,7 @@ def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni,
         print(" importo medio:", round(min(medi_seg), 2), round(max(medi_seg), 2),
               round(sum(medi_seg) / len(medi_seg),2))
 
-#Genera i clienti, esegue i controlli ed espora i due csv
+#Genera i clienti, esegue i controlli ed esporta i due csv
 def main():
 
     rng = np.random.default_rng(SEED)

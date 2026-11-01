@@ -115,7 +115,7 @@ def descrivi_candidati(X_std, scaler):
         print(f"\nk = {k}")
         print(centroidi.round(1))
 
-#Addestra il modello finale con K_SCELTO cluster e aggiunge una colonna in cluster
+#Addestra il modello finale con K_SCELTO cluster e aggiunge la colonna cluster
 def assegna_cluster(clienti, X_std):
     clienti = clienti.copy()
     modello = KMeans(n_clusters=K_SCELTO, random_state=SEED, n_init=10)
