@@ -1,3 +1,8 @@
+"""Genera il dataset simulato dei clienti di AllenaOra (Iscritti tra liglio 2025 e giugno 2026)
+Produce data/clienti-csv e data/segmenti_veri.csv
+Uso: python genera_dati.py ed utilizzando lo stesso SEED il dataset è
+sempre identico"""
+
 import calendar
 from datetime import date
 import numpy as np
@@ -84,6 +89,9 @@ for nome, regole in SEGMENTO_CLIENTI.items():
         print("Probabilità delle categorie non valide", nome,p)
 print("Controllo categorie completo") 
 
+"""Estrae la data di iscrizione di un cliente secondo le regole del suo segmento
+    Questa estrazione avviene in due passi: prima il mese, scelto tra i mesi tipici
+    della categoria , altrimenti un mese tra quelli ammessi; poi viene estratto il giorno"""
 def estrai_data_iscrizione(rng, regole):
     if rng.random() < regole["quota_tipici"]:
         mesi = regole["mesi_tipici"]
@@ -93,10 +101,10 @@ def estrai_data_iscrizione(rng, regole):
     anno, mese = mesi[indice]
     giorni_nel_mese = calendar.monthrange(anno,mese)[1]
     giorno = rng.integers(1, giorni_nel_mese + 1)
-    return date(anno,mese,int(giorno))
+    return date(anno,mese,int(giorno))  
 
+#riestrae un valore da una normale troncata
 def normale_troncata(rng,minimo,massimo, limite_superiore=None):
-    #riestrae un valore da una normale troncata
     media = (minimo+massimo)/2
     dev_std = (massimo-minimo) /4
     
@@ -125,21 +133,23 @@ def estrai_num_sessioni(rng, regole, anzianita):
     n=rng.poisson(lam)
     return max(1,int(n)) 
 
+#Estrae la categoria preferita con le probabilità del segmento
 def estrai_categoria(rng,regole):
-    #Estrae la categoria preferita con le probabilità del segmento
     return str(rng.choice(CATEGORIE, p=regole["prob_categorie"])) 
 
+#Prezzo per sessione: base del segmento (normale troncata, D18) con il ritocco della categoria (D04).
 def estrai_prezzo_sessione(rng, regole, categoria):
-    #Prezzo per sessione: base del segmento (normale troncata, D18) con il ritocco della categoria (D04).
     minimo, massimo = regole["prezzo_base"]
     prezzo_base = normale_troncata(rng, minimo, massimo)
     return round(float(prezzo_base) * MOLTIPLICATORE_CATEGORIA[categoria], 2)
 
+#Rende vuoto ogni valore con probabilità quota, restituendo la lista nuova ed il numero di mancanti
 def inserisci_mancanti(rng,valori,quota):
     mancante= rng.random(len(valori)) < quota
     nuovi = [None if m else v for v, m in zip(valori,mancante)]
     return nuovi, int(mancante.sum())
 
+#stampa per ogni segnmento i controlli attesi
 def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, 
                        giorni_ultima_sessione, categorie, importo_totale):
     for nome, regole in SEGMENTO_CLIENTI.items():
@@ -165,7 +175,7 @@ def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni,
         print(" importo medio:", round(min(medi_seg), 2), round(max(medi_seg), 2),
               round(sum(medi_seg) / len(medi_seg),2))
 
-
+#Genera i clienti, esegue i controlli ed espora i due csv
 def main():
 
     rng = np.random.default_rng(SEED)

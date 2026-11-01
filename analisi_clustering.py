@@ -31,8 +31,8 @@ AZIONI_CLUSTER={
     3: "Riattivare: campagna di rientro a gennaio e/o settembre con una sessione di prova"
 }
 
+#Legge il CSV dei clienti, con la data di iscrizione letta come data.
 def carica_dati(percorso):
-    #Legge il CSV dei clienti, con la data di iscrizione letta come data.
     return pd.read_csv(percorso, parse_dates=["data_iscrizione"])
 
 
@@ -61,9 +61,8 @@ def sostituisci_mancanti(clienti):
     print(f"Mediana importo medio: {mediana_m:.2f} - mediana giorni: {mediana_r} - moda categoria: {moda_cat}")
     return clienti, record_toccati
 
-
+#Restituisce la matrice delle feature: solo R, F e M, nell'ordine di COLONNE_RFM.
 def prepara_feature(clienti):
-    #Restituisce la matrice delle feature: solo R, F e M, nell'ordine di COLONNE_RFM.
     return clienti[COLONNE_RFM]
 
 def standardizza(X):
@@ -85,8 +84,8 @@ def confronta_k(X_std):
         righe.append({"k": k, "inerzia": modello.inertia_, "silhouette": silhouette})
     return pd.DataFrame(righe)
 
+#salva i due grafici in output
 def salva_grafici(confronto):
-    #salva i due grafici in output
     fig, ax = plt.subplots(figsize=(6,4))
     ax.plot(confronto["k"], confronto["inerzia"], marker="o")
     ax.set_xlabel("Numero di cluster k")
@@ -116,23 +115,23 @@ def descrivi_candidati(X_std, scaler):
         print(f"\nk = {k}")
         print(centroidi.round(1))
 
+#Addestra il modello finale con K_SCELTO cluster e aggiunge una colonna in cluster
 def assegna_cluster(clienti, X_std):
-    #Addestra il modello finale con K_SCELTO cluster e aggiunge una colonna in cluster
     clienti = clienti.copy()
     modello = KMeans(n_clusters=K_SCELTO, random_state=SEED, n_init=10)
     clienti["cluster"] = modello.fit_predict(X_std)
     return clienti, modello
 
+#restituisce il valore più frequente se c'è parità il primo in ordine
 def valore_prevalente(serie):
-    #restituisce il valore più frequente se c'è parità il primo in ordine
     return serie.mode()[0]
 
+#restituisce la quota in percentuale del valore più frequente
 def quota_prevalente(serie):
-    #restituisce la quota in percentuale del valore più frequente
     return serie.value_counts(normalize=True).iloc[0]*100
 
+#Calcola il profilo di ogni cluster: medie RFM, numerosità fatturato e valori più frequenti
 def calcola_profili(clienti):
-    #Calcola il profilo di ogni cluster: medie RFM, numerosità fatturato e valori più frequenti
     clienti=clienti.copy()
     clienti["mese_iscrizione"] = clienti["data_iscrizione"].dt.strftime("%Y-%m")
 
@@ -154,8 +153,8 @@ def calcola_profili(clienti):
     profili["quota_fatturato"] = profili["fatturato"] / profili ["fatturato"].sum()*100
     return profili.round(2).reset_index()
 
+#Verifica che ogni nome corrisponda ancora al profilo che lo definisce
 def controlla_nomi(profili):
-    """verifica che i nomi dei cluster corrispondano ancora ai vari profili"""
     p= profili.set_index("cluster")
     corrispondono=(
         p["F_media_sessioni"].idxmax()==0
@@ -167,16 +166,16 @@ def controlla_nomi(profili):
         raise ValueError("I cluster non corrispondono più ai nomi in questo momento: " \
         "rileggere i profili e aggiornare NOMI_CLUSTER")
 
+#Aggiunge ai profili il nome e l'azione di marketing di ogni cluster
 def aggiungi_nomi(profili):
-    #Aggiunge ai profili il nome e l'azione di marketing di ogni cluster
     controlla_nomi(profili)
     profili=profili.copy()
     profili["nome"]=profili["cluster"].map(NOMI_CLUSTER)
     profili["azione"]=profili["cluster"].map(AZIONI_CLUSTER)
     return profili
 
+#confronta i cluster con i segmenti veri, cioè tabella incrociata e ARI
 def valida_cluster(clienti, percorso_segmenti):
-    #confronta i cluster con i segmenti veri, cioè tabella incrociata e ARI
     segmenti =pd.read_csv(percorso_segmenti)
     unione=clienti.merge(segmenti, on="id_cliente", validate="one_to_one")
     if len(unione) != len(clienti):
@@ -185,10 +184,11 @@ def valida_cluster(clienti, percorso_segmenti):
     ari = adjusted_rand_score(unione["segmento"], unione["cluster"])
     return tabella, ari
 
+#salva scaler e modello addestrati in un unico file joblib
 def salva_modello(scaler, modello, percorso):
-    #salva scaler e modello addestrati in un unico file joblib
     joblib.dump({"scaler": scaler, "modello": modello}, percorso)
 
+#Esegue l'analisi completa, dal caricamento al salvataggio del modello
 def main():
     clienti = carica_dati(FILE_CLIENTI)
 
