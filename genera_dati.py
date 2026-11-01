@@ -1,5 +1,5 @@
-"""Genera il dataset simulato dei clienti di AllenaOra (Iscritti tra liglio 2025 e giugno 2026)
-Produce data/clienti-csv e data/segmenti_veri.csv
+"""Genera il dataset simulato dei clienti di AllenaOra (Iscritti tra Luglio 2025 e Giugno 2026)
+Produce data/clienti.csv e data/segmenti_veri.csv
 Uso: python genera_dati.py ed utilizzando lo stesso SEED il dataset è
 sempre identico"""
 
@@ -91,7 +91,7 @@ print("Controllo categorie completo")
 
 """Estrae la data di iscrizione di un cliente secondo le regole del suo segmento
     Questa estrazione avviene in due passi: prima il mese, scelto tra i mesi tipici
-    della categoria , altrimenti un mese tra quelli ammessi; poi viene estratto il giorno"""
+    della categoria del segmento, altrimenti un mese tra quelli ammessi; poi viene estratto il giorno"""
 def estrai_data_iscrizione(rng, regole):
     if rng.random() < regole["quota_tipici"]:
         mesi = regole["mesi_tipici"]
@@ -137,7 +137,7 @@ def estrai_num_sessioni(rng, regole, anzianita):
 def estrai_categoria(rng,regole):
     return str(rng.choice(CATEGORIE, p=regole["prob_categorie"])) 
 
-#Prezzo per sessione: base del segmento (normale troncata, D18) con il ritocco della categoria (D04).
+#Prezzo per sessione: base del segmento (normale troncata) con il ritocco della categoria
 def estrai_prezzo_sessione(rng, regole, categoria):
     minimo, massimo = regole["prezzo_base"]
     prezzo_base = normale_troncata(rng, minimo, massimo)
@@ -149,7 +149,7 @@ def inserisci_mancanti(rng,valori,quota):
     nuovi = [None if m else v for v, m in zip(valori,mancante)]
     return nuovi, int(mancante.sum())
 
-#stampa per ogni segnmento i controlli attesi
+#stampa per ogni segmento i controlli attesi
 def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, 
                        giorni_ultima_sessione, categorie, importo_totale):
     for nome, regole in SEGMENTO_CLIENTI.items():
