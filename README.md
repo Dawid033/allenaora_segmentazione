@@ -53,7 +53,7 @@ Rieseguire i primi due script permette di verificarne la riproducibilità, dovut
 # File prodotti
 
 | File | Contenuto |
-
+s
 | 'data/clienti.csv' | Dataset dei 500 clienti |
 | 'data/segmenti_veri.csv' | Segmento vero di ogni cliente, usato solo per la validazione |
 | 'output/confronto_k.csv' | Inerzia e silhouette per k da 2 a 8 |
@@ -74,7 +74,7 @@ Rieseguire i primi due script permette di verificarne la riproducibilità, dovut
 | 'QUOTA_MANCANTI' | 'genera_dati.py" | 0,025 | Probabilità che una cella sia vuota
 | 'K_SCELTO' | 'analisi_clustering.py' | 4 | Numero di cluster del modello finale
 
-# Struttura della carteòòa
+# Struttura della cartellaa
 
 allenaora_segmentazione/
 |-- genera_dati.py
