@@ -15,7 +15,7 @@ COLONNE_RFM = ["giorni_ultima_sessione", "num_sessioni", "importo_medio"]  # R, 
 CARTELLA_OUTPUT = Path(__file__).parent / "output"
 FILE_MODELLO = CARTELLA_OUTPUT / "modello.joblib"
 SEED = 42
-VALORI_K= range(2,9) #i valori sono da 2 a 8 compresi, il 9 è escluso
+VALORI_K= range(2,9) #i valori sono da 2 a 8 compresi
 K_CANDIDATI = [3,4,5]
 K_SCELTO = 4
 NOMI_CLUSTER= {
@@ -35,47 +35,47 @@ AZIONI_CLUSTER={
 def carica_dati(percorso):
     return pd.read_csv(percorso, parse_dates=["data_iscrizione"])
 
-
+    #Calcola l'importo medio per sessione e sostituisce i mancanti:
+    #mediana per l'importo medio e giorni dall'ultima sessione, moda per la categoria.
+    #Restituisce la tabella completa e il numero di record toccati.
 def sostituisci_mancanti(clienti):
-    """Calcola l'importo medio per sessione e sostituisce i mancanti:
-    mediana per l'importo medio e giorni dall'ultima sessione, moda per la categoria.
-    Restituisce la tabella completa e il numero di record toccati."""
+
     clienti = clienti.copy()
     record_toccati = int(clienti.isna().any(axis=1).sum())
 
     #dove manca l'importo totale, l'importo medio è NaN
     clienti["importo_medio"] = clienti["importo_totale"]/clienti["num_sessioni"]
-    m_mancante= clienti["importo_medio"].isna()
+    importo_mancante= clienti["importo_medio"].isna()
 
-    mediana_m = clienti["importo_medio"].median()
-    mediana_r = clienti["giorni_ultima_sessione"].median()
-    moda_cat = clienti["categoria_preferita"].mode()[0]
+    mediana_importo = clienti["importo_medio"].median()
+    mediana_giorni = clienti["giorni_ultima_sessione"].median()
+    moda_categoria = clienti["categoria_preferita"].mode()[0]
 
-    clienti["importo_medio"] = clienti["importo_medio"].fillna(mediana_m)
-    clienti.loc[m_mancante, "importo_totale"] = (
-        clienti.loc[m_mancante, "importo_medio"] * clienti.loc[m_mancante, "num_sessioni"]
+    clienti["importo_medio"] = clienti["importo_medio"].fillna(mediana_importo)
+    clienti.loc[importo_mancante, "importo_totale"] = (
+        clienti.loc[importo_mancante, "importo_medio"] * clienti.loc[importo_mancante, "num_sessioni"]
     ).round(2)
-    clienti["giorni_ultima_sessione"] = clienti["giorni_ultima_sessione"].fillna(mediana_r)
-    clienti["categoria_preferita"] = clienti["categoria_preferita"].fillna(moda_cat)
+    clienti["giorni_ultima_sessione"] = clienti["giorni_ultima_sessione"].fillna(mediana_giorni)
+    clienti["categoria_preferita"] = clienti["categoria_preferita"].fillna(moda_categoria)
 
-    print(f"Mediana importo medio: {mediana_m:.2f} - mediana giorni: {mediana_r} - moda categoria: {moda_cat}")
+    print(f"Mediana importo medio: {mediana_importo:.2f} - mediana giorni: {mediana_giorni} - moda categoria: {moda_categoria}")
     return clienti, record_toccati
 
 #Restituisce la matrice delle feature: solo R, F e M, nell'ordine di COLONNE_RFM.
 def prepara_feature(clienti):
     return clienti[COLONNE_RFM]
 
+#Standardizza R, F e M (z-score: media 0, deviazione standard 1).
+#Restituisce la matrice standardizzata (array NumPy) e lo scaler addestrato,
+#che serve a standardizzare i nuovi clienti con le stesse medie e deviazioni standard.
 def standardizza(X):
-    """Standardizza R, F e M (z-score: media 0, deviazione standard 1).
-    Restituisce la matrice standardizzata (array NumPy) e lo scaler addestrato,
-    che serve a standardizzare i nuovi clienti con le stesse medie e deviazioni standard."""
     scaler = StandardScaler()
     X_std = scaler.fit_transform(X)
     return X_std, scaler
 
+#Addestra K-Means per ogni k di VALORI_K e misura inerzia e silhouette
+#Restituisce una tabella con una riga per ogni k
 def confronta_k(X_std):
-    """Addestra K-Means per ogni k di VALORI_K e misura inerzia e silhouette
-    Restituisce una tabella con una riga per ogni k."""
     righe = []
     for k in VALORI_K:
         modello = KMeans(n_clusters=k, random_state=SEED, n_init=10)
@@ -104,9 +104,9 @@ def salva_grafici(confronto):
     fig.savefig(CARTELLA_OUTPUT / "grafico_silhouette.png", dpi=150)
     plt.close(fig)
 
+#Per ogni k candidato stampa numerosità dei cluster e centroidi
+#riportati come: giorni, sessioni, euro
 def descrivi_candidati(X_std, scaler):
-    """Per ogni k candidato stampa numerosità dei cluster e centroidi
-    riportati come: giorni, sessioni, euro"""
     for k in K_CANDIDATI:
         modello = KMeans(n_clusters=k, random_state=SEED, n_init=10).fit(X_std)
         centroidi =pd.DataFrame(scaler.inverse_transform(modello.cluster_centers_),
@@ -177,11 +177,11 @@ def aggiungi_nomi(profili):
 #confronta i cluster con i segmenti veri, cioè tabella incrociata e ARI
 def valida_cluster(clienti, percorso_segmenti):
     segmenti =pd.read_csv(percorso_segmenti)
-    unione=clienti.merge(segmenti, on="id_cliente", validate="one_to_one")
-    if len(unione) != len(clienti):
+    clienti_segmenti=clienti.merge(segmenti, on="id_cliente", validate="one_to_one")
+    if len(clienti_segmenti) != len(clienti):
         raise ValueError("Alcuni clienti non hanno un segmento vero corrispondente")
-    tabella = pd.crosstab(unione["cluster"], unione["segmento"])
-    ari = adjusted_rand_score(unione["segmento"], unione["cluster"])
+    tabella = pd.crosstab(clienti_segmenti["cluster"], clienti_segmenti["segmento"])
+    ari = adjusted_rand_score(clienti_segmenti["segmento"], clienti_segmenti["cluster"])
     return tabella, ari
 
 #salva scaler e modello addestrati in un unico file joblib
@@ -206,18 +206,18 @@ def main():
     print("Mancanti per colonna:")
     print(clienti.isna().sum())
 
-    #analisi_clustering, sostituzione dei mancanti
+    #sostituzione dei mancanti
     clienti, record_toccati = sostituisci_mancanti(clienti)
     print("Record toccati:", record_toccati)
     print("Mancanti dopo la sostituzione:", int(clienti.isna().sum().sum()))
     print("Forma dopo la sostituzione:", clienti.shape)
 
-    # Passo 3: matrice delle feature RFM
+    #matrice delle feature RFM
     X = prepara_feature(clienti)
     print("Forma della matrice delle feature:", X.shape)
     print(X.describe().round(2))
 
-    # Passo 4: standardizzazione
+    #standardizzazione
     X_std, scaler = standardizza(X)
     print("Medie usate:", scaler.mean_.round(2))
     print("Deviazioni standard usate:", scaler.scale_.round(2))
