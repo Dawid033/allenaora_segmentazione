@@ -13,20 +13,22 @@ GIORNI_PER_MESE = 365/12
 
 SEED = 42
 N_CLIENTI = 500
-MOLTIPLICATORE_CATEGORIA = { #ritocco di prezzo dovuto alla categoria 
-    #tramite moltiplicatore percentuale
+MOLTIPLICATORE_CATEGORIA = { #ritocco di prezzo alla sessione, in base alla categoria
+   
     "Forza e tonificazione" : 1.0,
     "Cardio/HIIT": 1.0,
     "Yoga e Pilates": 0.9,
     "Postura e riabilitazione": 1.1,
 }
 CATEGORIE = list(MOLTIPLICATORE_CATEGORIA.keys())
-ZONE = ["Nord-Ovest", "Nord-Est", "Centro", "Sud", "Isole"] #Stessa probabilità x zona
+ZONE = ["Nord-Ovest", "Nord-Est", "Centro", "Sud", "Isole"] #Estratte con stessa probabilità per zona
 QUOTA_MANCANTI= 0.025
 CARTELLA_DATI = Path(__file__).parent / "data"
 DATA_RIFERIMENTO = date(2026,6,30)
-#creo il dizionario dei segmenti/tipi_di_clienti ipotizzati
-SEGMENTO_CLIENTI = {
+#Segmenti ipotizzati e regole con cui si generano i loro clienti. 
+#I segmenti attivi usano ritmo_mensile e giorni_ultima_sessione; le ripartenze mancate usano invece durata_attiva
+#e sessioni_totali (le altre regole sono None)
+SEGMENTI = {
     "Costanti": {
         "quota": 0.25,
         "mesi_tipici": [(2025,7), (2025,8), (2025,9), (2025,10), (2025,11), (2025,12)],
@@ -34,9 +36,9 @@ SEGMENTO_CLIENTI = {
         "mesi_ammessi": [(2026,1),(2026,2)],
         "ritmo_mensile": (7,10),
         "durata_attiva": None, #regola non necessaria a questo segmento
-        "sessioni_totali": None, #regola non necessaria a questo segmento
+        "sessioni_totali": None, 
         "giorni_ultima_sessione": (1,15),
-        "prezzo_base": (30,38), #prezzo base per sessione del segmento
+        "prezzo_base": (30,38),
         "prob_categorie": [0.30,0.20,0.20,0.30], #Forza e tonificazione, Cardio/HIIT, Yoga e pilates, Postura e riabilitazione
     },
     "Prova_costume": {
@@ -45,11 +47,11 @@ SEGMENTO_CLIENTI = {
         "quota_tipici":1,
         "mesi_ammessi":[],
         "ritmo_mensile": (8,12), 
-        "durata_attiva": None,#regola non necessaria a questo segmento
-        "sessioni_totali": None, #regola non necessaria a questo segmento
+        "durata_attiva": None,
+        "sessioni_totali": None, 
         "giorni_ultima_sessione": (1,25),
-        "prezzo_base": (42,55), #prezzo base per sessione del segmento
-        "prob_categorie": [0.35,0.35,0.20,0.10], #Forza e tonificazione, Cardio/HIIT, Yoga e pilates, Postura e riabilitazione
+        "prezzo_base": (42,55), #prezzo per sessione del segmento
+        "prob_categorie": [0.35,0.35,0.20,0.10], 
     },
     "Occasionali": {
         "quota": 0.30,
@@ -57,11 +59,11 @@ SEGMENTO_CLIENTI = {
         "quota_tipici":1,
         "mesi_ammessi": [],
         "ritmo_mensile": (0.5,1.5),
-        "durata_attiva": None, #regola non necessaria a questo segmento
-        "sessioni_totali": None, #regola non necessaria a questo segmento
+        "durata_attiva": None, 
+        "sessioni_totali": None, 
         "giorni_ultima_sessione": (20,90),
-        "prezzo_base": (22,30), #prezzo base per sessione del segmento
-        "prob_categorie": [0.20,0.25,0.40,0.15], #Forza e tonificazione, Cardio/HIIT, Yoga e pilates, Postura e riabilitazione
+        "prezzo_base": (22,30), 
+        "prob_categorie": [0.20,0.25,0.40,0.15], 
     },
     "Ripartenze_mancate": {
         "quota": 0.25,
@@ -77,16 +79,16 @@ SEGMENTO_CLIENTI = {
     },
 }
 
-for nome, regole in SEGMENTO_CLIENTI.items():
+for nome, regole in SEGMENTI.items():
     for anno, mese in regole["mesi_tipici"] + regole["mesi_ammessi"]:
         if not ((2025, 7) <= (anno, mese) <= (2026,6)):
             print("Mese fuori dalla finestra di osservazione", nome,anno,mese)
 print("Controllo mesi completo")
 
-for nome, regole in SEGMENTO_CLIENTI.items():
-    p = regole["prob_categorie"]
-    if len(p) !=len(CATEGORIE) or abs(sum(p)-1)> 1e-9:
-        print("Probabilità delle categorie non valide", nome,p)
+for nome, regole in SEGMENTI.items():
+    probabilita = regole["prob_categorie"]
+    if len(probabilita) !=len(CATEGORIE) or abs(sum(probabilita)-1)> 1e-9:
+        print("Probabilità delle categorie non valide", nome,probabilita)
 print("Controllo categorie completo") 
 
 """Estrae la data di iscrizione di un cliente secondo le regole del suo segmento
@@ -103,7 +105,7 @@ def estrai_data_iscrizione(rng, regole):
     giorno = rng.integers(1, giorni_nel_mese + 1)
     return date(anno,mese,int(giorno))  
 
-#riestrae un valore da una normale troncata
+#riestrae un valore da una normale troncata, riestrae finchè il valore è ammesso
 def normale_troncata(rng,minimo,massimo, limite_superiore=None):
     media = (minimo+massimo)/2
     dev_std = (massimo-minimo) /4
@@ -119,19 +121,19 @@ def normale_troncata(rng,minimo,massimo, limite_superiore=None):
     return valore
 
 def poisson_troncata(rng,minimo,massimo):
-    lam = (minimo + massimo)/2
-    valore = rng.poisson(lam)
+    media_poisson = (minimo + massimo)/2
+    valore = rng.poisson(media_poisson)
     while valore < minimo or valore > massimo:
-        valore = rng.poisson(lam)
+        valore = rng.poisson(media_poisson)
     return int(valore)
 
 def estrai_num_sessioni(rng, regole, anzianita):
     minimo, massimo = regole["ritmo_mensile"]
     ritmo= rng.uniform(minimo,massimo)
     mesi= anzianita / GIORNI_PER_MESE
-    lam= ritmo * mesi
-    n=rng.poisson(lam)
-    return max(1,int(n)) 
+    media_poisson= ritmo * mesi
+    n_sessioni=rng.poisson(media_poisson)
+    return max(1,int(n_sessioni)) 
 
 #Estrae la categoria preferita con le probabilità del segmento
 def estrai_categoria(rng,regole):
@@ -145,14 +147,14 @@ def estrai_prezzo_sessione(rng, regole, categoria):
 
 #Rende vuoto ogni valore con probabilità quota, restituendo la lista nuova ed il numero di mancanti
 def inserisci_mancanti(rng,valori,quota):
-    mancante= rng.random(len(valori)) < quota
-    nuovi = [None if m else v for v, m in zip(valori,mancante)]
-    return nuovi, int(mancante.sum())
+    maschera_mancante= rng.random(len(valori)) < quota
+    nuovi = [None if m else v for v, m in zip(valori,maschera_mancante)]
+    return nuovi, int(maschera_mancante.sum())
 
 #stampa per ogni segmento i controlli attesi
 def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni, 
                        giorni_ultima_sessione, categorie, importo_totale):
-    for nome, regole in SEGMENTO_CLIENTI.items():
+    for nome, regole in SEGMENTI.items():
         date_seg = [d for d, s in zip(date_iscrizione, segmenti) if s == nome]
         anz_seg = [a for a, s in zip(anzianita, segmenti) if s == nome]
         n_tipici = sum((d.year, d.month) in regole["mesi_tipici"] for d in date_seg)
@@ -164,13 +166,13 @@ def controlla_segmenti(segmenti, date_iscrizione, anzianita, num_sessioni,
         sotto_90 = sum(a<90 for a in anz_seg)
         print("giorni dall ultima sessione:", min(giorni_seg), max(giorni_seg),
                "oltre l'anzianita", violazioni,"anzianita <90", sotto_90)
-        sess_seg = [n for n, s in zip(num_sessioni, segmenti) if s ==nome]
-        n_uno = sum(n ==1 for n in sess_seg)
+        sess_seg = [n_sessioni for n_sessioni, s in zip(num_sessioni, segmenti) if s ==nome]
+        n_uno = sum(n_sessioni ==1 for n_sessioni in sess_seg)
         print(" sessioni:", min(sess_seg), max(sess_seg), "con 1 sessione", n_uno)
 
         cat_seg = [c for c, s in zip(categorie, segmenti) if s == nome]
         print(" categorie:", [cat_seg.count(c) for c in CATEGORIE])
-        medi_seg = [imp / n for imp, n, s in zip(importo_totale, num_sessioni, segmenti)
+        medi_seg = [imp / n_sessioni for imp, n_sessioni, s in zip(importo_totale, num_sessioni, segmenti)
                     if s == nome]
         print(" importo medio:", round(min(medi_seg), 2), round(max(medi_seg), 2),
               round(sum(medi_seg) / len(medi_seg),2))
@@ -180,8 +182,8 @@ def main():
 
     rng = np.random.default_rng(SEED)
     #Segmenti per tutti i vari clienti, prima di ogni estrazione
-    nomi_segmenti = list(SEGMENTO_CLIENTI.keys())
-    quote = [SEGMENTO_CLIENTI[nome]["quota"] for nome in nomi_segmenti]
+    nomi_segmenti = list(SEGMENTI.keys())
+    quote = [SEGMENTI[nome]["quota"] for nome in nomi_segmenti]
     segmenti = rng.choice(nomi_segmenti, size=N_CLIENTI, p=quote)
 
     #dati di ciascun cliente
@@ -194,25 +196,25 @@ def main():
     importo_totale= []
 
     for i, segmento in enumerate(segmenti, start=1):
-        regole = SEGMENTO_CLIENTI[segmento]
+        regole = SEGMENTI[segmento]
         data =estrai_data_iscrizione(rng, regole)
-        anz = (DATA_RIFERIMENTO - data).days
+        anzianita_cliente = (DATA_RIFERIMENTO - data).days
         id_clienti.append(f"C{i:04d}")
         date_iscrizione.append(data)
-        anzianita.append(anz)
+        anzianita.append(anzianita_cliente)
 
         if regole["ritmo_mensile"] is not None:
-            num_sessioni.append(estrai_num_sessioni(rng, regole, anz))
+            num_sessioni.append(estrai_num_sessioni(rng, regole, anzianita_cliente))
             min_giorni, max_giorni = regole["giorni_ultima_sessione"]
-            limite= min(max_giorni,anz)
-            giorni= round(normale_troncata(rng, min_giorni, max_giorni, limite))
+            limite_giorni= min(max_giorni,anzianita_cliente)
+            giorni= round(normale_troncata(rng, min_giorni, max_giorni, limite_giorni))
             giorni_ultima_sessione.append(giorni)
         else:
             minimo, massimo = regole["durata_attiva"]
             durata = round(normale_troncata(rng,minimo,massimo))
             min_sess, max_sess = regole["sessioni_totali"]
             num_sessioni.append(poisson_troncata(rng,min_sess,max_sess))
-            giorni_ultima_sessione.append(anz - durata)
+            giorni_ultima_sessione.append(anzianita_cliente - durata)
 
         categoria =estrai_categoria(rng,regole)
         categorie.append(categoria)
