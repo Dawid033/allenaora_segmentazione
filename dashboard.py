@@ -1,4 +1,5 @@
-#avvio: streamlit run dashboard.py -> dopo genera_dati e analisi_clustering
+#Dashboard del progetto: filtri, profili dei cluster e form per nuovo cliente
+# avvio: streamlit run dashboard.py -> dopo genera_dati e analisi_clustering
 
 from pathlib import Path
 
@@ -32,9 +33,8 @@ NOMI_COLONNE_PROFILI = {
     "M_media": "M media (€)",
     "azione": "Azione",
 }
-
+#se manca uno dei file -> ferma la pagina
 def controlla_file():
-    """se manca uno dei file -> ferma la pagina"""
     file_richiesti = [FILE_CLIENTI, FILE_PROFILI, FILE_CONFRONTO, FILE_MODELLO]
     mancanti = [f.name for f in file_richiesti if not f.exists()]
     if mancanti:
@@ -44,21 +44,22 @@ def controlla_file():
         )
         st.stop()
 
+#legge i CSV prodotti da analisi_clustering.py
 @st.cache_data 
 def carica_tabelle():
-    """legge i CSV prodotti da analisi_clustering.py"""
     clienti = pd.read_csv(FILE_CLIENTI, parse_dates=["data_iscrizione"])
     profili = pd.read_csv(FILE_PROFILI)
     confronto = pd.read_csv(FILE_CONFRONTO)
     return clienti, profili, confronto
 
+#carica lo scaler e il modello da analisi_clustering.py
 @st.cache_resource
 def carica_modello():
     contenuto = joblib.load(FILE_MODELLO)
     return contenuto["scaler"], contenuto["modello"]
 
+#disegna i filtri e restutuisce le scelte dell'utente
 def filtri_sidebar(clienti):
-    """disegna i filtri e restutuisce le scelte dell'utente"""
     st.sidebar.header("Filtri")
 
     tutte_zone = sorted(clienti["zona"].unique())
@@ -79,8 +80,8 @@ def filtri_sidebar(clienti):
     )
     return zone, periodo, categorie
 
+#Restituisce solo i clienti che rispettano tutti e tre i filtri.
 def applica_filtri(clienti, zone, periodo, categorie):
-    """Restituisce solo i clienti che rispettano tutti e tre i filtri."""
     inizio, fine = periodo
     maschera = (
         clienti["zona"].isin(zone)
@@ -89,14 +90,14 @@ def applica_filtri(clienti, zone, periodo, categorie):
     )
     return clienti[maschera]
 
+#Scatter dei clienti filtrati su due variabili scelte, un colore fisso per cluster.
 def disegna_scatter(filtrati, nomi_cluster):
-    """Scatter dei clienti filtrati su due variabili scelte, un colore fisso per cluster."""
     st.subheader("Clienti per cluster")
 
     etichette = list(ETICHETTE_ASSI.keys())
-    sinistra, destra = st.columns(2)
-    etichetta_x = sinistra.selectbox("Asse x", etichette, index=0)
-    etichetta_y = destra.selectbox("Asse y", etichette, index=1)
+    col_x, col_y = st.columns(2)
+    etichetta_x = col_x.selectbox("Asse x", etichette, index=0)
+    etichetta_y = col_y.selectbox("Asse y", etichette, index=1)
     colonna_x = ETICHETTE_ASSI[etichetta_x]
     colonna_y = ETICHETTE_ASSI[etichetta_y]
 
@@ -116,8 +117,8 @@ def disegna_scatter(filtrati, nomi_cluster):
     st.pyplot(fig)
     plt.close(fig)
 
+#ricalcola numerosità e medie R, F, M sui clienti filtrati.
 def calcola_profili_filtrati(filtrati, profili):
-    #ricalcola numerosità e medie R, F, M sui clienti filtrati.
     tabella = (
         filtrati.groupby("cluster")
         .agg(
@@ -139,9 +140,8 @@ def calcola_profili_filtrati(filtrati, profili):
                        "R_media", "F_media", "M_media", "azione"]]
     return tabella.round({"quota_clienti": 1, "R_media": 1, "F_media": 1, "M_media": 2})
 
-
+#Disegna una barra per cluster con il numero di clienti filtrati.
 def disegna_barre(tabella):
-    #Disegna una barra per cluster con il numero di clienti filtrati.
     etichette = [f"{c} – {n}" for c, n in zip(tabella["cluster"], tabella["nome"])]
     colori = [COLORI_CLUSTER[c] for c in tabella["cluster"]]
     fig, ax = plt.subplots(figsize=(7, 4))
@@ -153,15 +153,14 @@ def disegna_barre(tabella):
     st.pyplot(fig)
     plt.close(fig)
 
+#Assegna un cluster a una tabella di clienti con le colonne R, F e M.
 def assegna_gruppo(nuovi, scaler, modello):
-    #Assegna un cluster a una tabella di clienti con le colonne R, F e M.
     colonne = list(scaler.feature_names_in_)
     X_nuovi = scaler.transform(nuovi[colonne])
     return modello.predict(X_nuovi)
 
-
+#Mostra il form del nuovo cliente e, all'invio, il gruppo assegnato con nome e azione.
 def form_nuovo_cliente(scaler, modello, profili, nomi_cluster):
-    """Mostra il form del nuovo cliente e, all'invio, il gruppo assegnato con nome e azione."""
     st.subheader("Assegna un nuovo cliente")
     with st.form("nuovo_cliente"):
         sessioni = st.number_input("Numero di sessioni (F)", min_value=1, value=10, step=1)
@@ -204,10 +203,10 @@ def main():
     k = modello.n_clusters
     silhouette = confronto.loc[confronto["k"] == k, COLONNA_SILHOUETTE].iloc[0]
 
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Clienti filtrati", f"{len(filtrati)} su {len(clienti)}")
-    col2.metric("Numero di gruppi (k)", k)
-    col3.metric("Silhouette del modello (500 clienti)", f"{silhouette:.3f}")
+    col_clienti, col_k, col_silhouette = st.columns(3)
+    col_clienti.metric("Clienti filtrati", f"{len(filtrati)} su {len(clienti)}")
+    col_k.metric("Numero di gruppi (k)", k)
+    col_silhouette.metric("Silhouette del modello (500 clienti)", f"{silhouette:.3f}")
 
     if filtrati.empty:
         st.warning("Nessun cliente corrisponde ai filtri selezionati.")
