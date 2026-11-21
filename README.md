@@ -74,7 +74,7 @@ s
 | 'QUOTA_MANCANTI' | 'genera_dati.py" | 0,025 | Probabilità che una cella sia vuota
 | 'K_SCELTO' | 'analisi_clustering.py' | 4 | Numero di cluster del modello finale
 
-# Struttura della cartellaa
+# Struttura della cartella
 
 allenaora_segmentazione/
 |-- genera_dati.py
